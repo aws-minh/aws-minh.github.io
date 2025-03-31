@@ -14,6 +14,10 @@
             position: relative;
             scroll-behavior: smooth;
         }
+        
+        html {
+            scroll-behavior: smooth;
+        }
 
         /* Hero Section */
         .hero {
@@ -116,7 +120,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
+                        <a class="nav-link active" href="#home">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#resume">Resume</a>
@@ -148,6 +152,36 @@
                 </div>
             </div>
         </section>
+    </main>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Minh Nguyen</h5>
+                    <p>BI Analyst & Data Engineer</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="social-links">
+                        <a href="https://linkedin.com/in/mn97" target="_blank" class="text-white me-3">
+                            <i class="fab fa-linkedin fa-lg"></i>
+                        </a>
+                        <a href="https://github.com/minhnguyendev" target="_blank" class="text-white me-3">
+                            <i class="fab fa-github fa-lg"></i>
+                        </a>
+                        <a href="mailto:ducminh97@aol.com" class="text-white">
+                            <i class="fas fa-envelope fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p>&copy; 2025 Minh Nguyen. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
         <section class="py-5 bg-light">
             <div class="container px-4 px-lg-5">
@@ -608,4 +642,17 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control"
+                                        <input type="email" class="form-control" id="email" required />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="subject" class="form-label">Subject</label>
+                                        <input type="text" class="form-control" id="subject" required />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message" class="form-label">Message</label>
+                                        <textarea class="form-control" id="message" rows="5" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Send Message</button>
+                                </form>
+                            </div>
+                        </div>s="form-control"
