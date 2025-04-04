@@ -257,6 +257,19 @@
             font-weight: 500;
         }
         
+        /* Project description */
+        .project-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            max-width: 95%;
+        }
+        
+        .feature-list li {
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+        
         /* Contact form */
         .form-control {
             border-radius: 8px;
@@ -387,7 +400,7 @@
                                 </p>
                                 <p>
                                     I hold a degree in Computer Information Systems with a concentration in Big Data from Georgia State University 
-                                    and am currently pursuing a Master of Engineering in Artificial Intelligence at Johns Hopkins University.
+                                    and am currently pursuing a Master of Science in Engineering in Artificial Intelligence at Johns Hopkins University.
                                 </p>
                                 <p>
                                     I'm passionate about turning complex data into actionable insights and building scalable, containerized applications 
@@ -462,13 +475,13 @@
                                 <i class="fas fa-external-link-alt me-1"></i> Visit
                             </a>
                         </div>
-                        <p>
+                        <p class="project-description">
                             A comprehensive B2B bulk purchasing platform for restaurants with secure role-based access controls 
                             and advanced business features.
                         </p>
                         <div class="mb-3">
                             <strong>Key Features:</strong>
-                            <ul>
+                            <ul class="feature-list">
                                 <li>Engineered a B2B bulk purchasing platform using Flask and SQLAlchemy</li>
                                 <li>Implemented role-based access controls for restaurants, account managers, and administrators</li>
                                 <li>Developed custom pricing negotiations and real-time inventory management</li>
@@ -494,13 +507,13 @@
                                 <i class="fas fa-external-link-alt me-1"></i> Visit
                             </a>
                         </div>
-                        <p>
+                        <p class="project-description">
                             A comprehensive flask-based salon booking system with user authentication, appointment scheduling, 
                             and an integrated chatbot assistant.
                         </p>
                         <div class="mb-3">
                             <strong>Key Features:</strong>
-                            <ul>
+                            <ul class="feature-list">
                                 <li>Developed a flask-based salon booking system with user authentication</li>
                                 <li>Created an integrated chatbot assistant for customer interactions</li>
                                 <li>Implemented a secure admin dashboard with staff management features</li>
@@ -518,7 +531,7 @@
                 </div>
                 
                 <!-- Project 3 -->
-                <div class="card fade-in delay-2">
+                <div class="card mb-5 fade-in delay-2">
                     <div class="card-body">
                         <div class="project-header">
                             <h3 class="project-title h3">Kafka Temperature Visualization</h3>
@@ -526,13 +539,13 @@
                                 <i class="fas fa-external-link-alt me-1"></i> Visit
                             </a>
                         </div>
-                        <p>
+                        <p class="project-description">
                             A real-time data visualization application using Kafka and Flask for monitoring sensor data streams,
                             featuring interactive charts and dashboards.
                         </p>
                         <div class="mb-3">
                             <strong>Key Features:</strong>
-                            <ul>
+                            <ul class="feature-list">
                                 <li>Developed a real-time visualization application for sensor data streams</li>
                                 <li>Created interactive charts and dashboards for data exploration</li>
                                 <li>Implemented Docker Compose infrastructure for a multi-container application</li>
@@ -548,45 +561,45 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Project 4 -->
+                <div class="card mb-5 fade-in delay-3">
+                    <div class="card-body">
+                        <div class="project-header">
+                            <h3 class="project-title h3">eCommerce Platform</h3>
+                            <a href="https://simple-singularly-haddock.ngrok-free.app" target="_blank" class="project-link btn btn-sm btn-outline-primary">
+                                <i class="fas fa-external-link-alt me-1"></i> Visit
+                            </a>
+                        </div>
+                        <p class="project-description">
+                            A full-featured e-commerce web application built from the ground up, replicating core functionalities 
+                            of an online marketplace including product browsing, search, user authentication, shopping cart, and order management.
+                        </p>
+                        <div class="mb-3">
+                            <strong>Key Features:</strong>
+                            <ul class="feature-list">
+                                <li>Developed a full-stack e-commerce application with user authentication, product search, 
+                                    shopping cart, and order management</li>
+                                <li>Engineered a scalable microservices architecture with Docker and Kubernetes, supporting 
+                                    horizontal pod autoscaling and load balancing</li>
+                                <li>Implemented robust security features including CSRF protection, password hashing, 
+                                    role-based access control, and comprehensive logging</li>
+                            </ul>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag">Flask</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">Kubernetes</span>
+                            <span class="tag">eCommerce</span>
+                            <span class="tag">Microservices</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
-        <!-- Project 4 -->
-        <div class="card mb-5 fade-in delay-3">
-            <div class="card-body">
-                <div class="project-header">
-                    <h3 class="project-title h3">Minh Duc Nguyen eCommerce Website</h3>
-                    <a href="https://simple-singularly-haddock.ngrok-free.app" target="_blank" class="project-link btn btn-sm btn-outline-primary">
-                        <i class="fas fa-external-link-alt me-1"></i> Visit
-                    </a>
-                </div>
-                <p>
-                    The Minh Duc Nguyen eCommerce website is a full-featured e-commerce web application built from the ground up, demonstrating a wide range of software development and engineering skills. 
-                    The project replicates core functionalities of an online marketplace, including product browsing, search, user authentication, shopping cart, and order management.
-                </p>
-                <div class="mb-3">
-                    <strong>Key Features:</strong>
-                    <ul>
-                        <li>Developed a full-stack e-commerce web application using Flask and Python, 
-                            implementing core features such as user authentication, product search,
-                            shopping cart, and order management with advanced web scraping techniques to dynamically populate product databases.</li>
-                        <li>Engineered a scalable microservices architecture utilizing Docker and Kubernetes, with automated deployment pipelines that support horizontal pod autoscaling, load balancing,
-                            and persistent storage, demonstrating proficiency in cloud-native application development and DevOps practices.</li>
-                        <li>Implemented robust security features including CSRF protection, password hashing, role-based access control, and comprehensive logging mechanisms,
-                            while integrating advanced technologies like PySpark for data processing and creating a responsive, production-ready web application with modern frontend design.</li>
-                    </ul>
-                </div>
-                <div class="project-tags">
-                    <span class="tag">Flask</span>
-                    <span class="tag">Python</span>
-                    <span class="tag">Docker</span>
-                    <span class="tag">Kubernetes</span>
-                    <span class="tag">eCommerce</span>
-                    <span class="tag">Microservices</span>
-                </div>
-            </div>
-        </div>
-</section>
-<!-- Experience Section -->
+
+        <!-- Experience Section -->
         <section id="experience" class="py-5 bg-white">
             <div class="container px-4 px-lg-5">
                 <h2 class="section-title">Work Experience</h2>
@@ -657,7 +670,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Contact Section -->
         <section id="contact" class="py-5">
             <div class="container px-4 px-lg-5">
