@@ -334,6 +334,28 @@
             animation-delay: 0.6s;
             opacity: 0;
         }
+
+        /* View Counter Styles */
+        .view-counter {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 30px;
+            display: inline-block;
+        }
+        
+        .view-counter-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .view-counter-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 40px;
+        }
     </style>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbarNav" data-bs-offset="100">
@@ -362,6 +384,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html" target="_blank"><i class="fas fa-chart-line"></i></a>
                     </li>
                 </ul>
             </div>
@@ -671,6 +696,14 @@
                 </div>
             </div>
         </section>
+
+        <!-- View Counter Section -->
+        <div class="view-counter-container">
+            <div class="view-counter">
+                <i class="fas fa-eye me-2"></i> Portfolio Views: <span id="view-count" class="view-counter-value">--</span>
+            </div>
+        </div>
+
         <!-- Contact Section -->
         <section id="contact" class="py-5">
             <div class="container px-4 px-lg-5">
@@ -700,7 +733,7 @@
                             <div class="col-md-4 mb-3 mb-md-0">
                                 <div class="card h-100 text-center py-4">
                                     <div class="card-body">
-                                        <i class="fas fa-map-marker-alt text-primary mb-3" style="font-size: 2rem;"></i>
+                                       <i class="fas fa-map-marker-alt text-primary mb-3" style="font-size: 2rem;"></i>
                                         <h4 class="h5 mb-3">Location</h4>
                                         <span>Atlanta, GA</span>
                                     </div>
@@ -758,8 +791,31 @@
     </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- View Tracking Script -->
     <script>
+        // Initialize counters in localStorage if they don't exist
+        if (!localStorage.getItem('total_views')) {
+            localStorage.setItem('total_views', '0');
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
+            // Track page view on load
+            trackPageView();
+            
+            // Update view counter on page
+            updateViewCounter();
+            
+            // Track section views when scrolling
+            let lastSection = getCurrentSection();
+            window.addEventListener('scroll', function() {
+                const currentSection = getCurrentSection();
+                if (currentSection && currentSection !== lastSection) {
+                    trackSectionView(currentSection);
+                    lastSection = currentSection;
+                }
+            });
+            
             // Add active class to navbar links based on current section
             const sections = document.querySelectorAll('section[id]');
             const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
@@ -824,106 +880,110 @@
                 observer.observe(element);
             });
         });
+
+        // Function to get current visible section
+        function getCurrentSection() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPosition = window.scrollY + 100;
+            
+            for (const section of sections) {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    return section.getAttribute('id');
+                }
+            }
+            
+            return null;
+        }
+
+        // Track page view
+        function trackPageView() {
+            // Get today's date in YYYY-MM-DD format
+            const today = new Date().toISOString().split('T')[0];
+            const storageKey = `pageviews_${today}`;
+            
+            // Get current count from localStorage
+            let count = localStorage.getItem(storageKey) || 0;
+            count = parseInt(count) + 1;
+            
+            // Save updated count
+            localStorage.setItem(storageKey, count);
+            
+            // Update total count
+            let totalCount = localStorage.getItem('total_views') || 0;
+            totalCount = parseInt(totalCount) + 1;
+            localStorage.setItem('total_views', totalCount);
+            
+            // Send data to counter API
+            const visitorData = {
+                url: window.location.pathname,
+                referrer: document.referrer || 'direct',
+                screenWidth: window.innerWidth,
+                screenHeight: window.innerHeight,
+                date: today,
+                userAgent: navigator.userAgent,
+                language: navigator.language
+            };
+            
+            // Store visitor data in localStorage
+            const visitorHistory = JSON.parse(localStorage.getItem('visitor_history') || '[]');
+            visitorHistory.push({
+                timestamp: new Date().toISOString(),
+                data: visitorData
+            });
+            
+            // Keep only the latest 100 entries
+            if (visitorHistory.length > 100) {
+                visitorHistory.shift();
+            }
+            
+            localStorage.setItem('visitor_history', JSON.stringify(visitorHistory));
+            
+            // Update counter display
+            updateViewCounter();
+        }
+
+        // Track section view
+        function trackSectionView(section) {
+            // Get today's date in YYYY-MM-DD format
+            const today = new Date().toISOString().split('T')[0];
+            const storageKey = `section_${section}_${today}`;
+            
+            // Get current count from localStorage
+            let count = localStorage.getItem(storageKey) || 0;
+            count = parseInt(count) + 1;
+            
+            // Save updated count
+            localStorage.setItem(storageKey, count);
+            
+            // Store section view in history
+            const sectionHistory = JSON.parse(localStorage.getItem('section_history') || '[]');
+            sectionHistory.push({
+                timestamp: new Date().toISOString(),
+                section: section
+            });
+            
+            // Keep only the latest 100 entries
+            if (sectionHistory.length > 100) {
+                sectionHistory.shift();
+            }
+            
+            localStorage.setItem('section_history', JSON.stringify(sectionHistory));
+        }
+
+        // Update view counter display
+        function updateViewCounter() {
+            const viewCountElement = document.getElementById('view-count');
+            if (viewCountElement) {
+                const totalViews = localStorage.getItem('total_views') || 0;
+                viewCountElement.textContent = parseInt(totalViews).toLocaleString();
+            }
+        }
     </script>
-    <!-- View Tracking Script -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Track page view on load
-    trackPageView();
     
-    // Track section views when scrolling
-    let lastSection = getCurrentSection();
-    window.addEventListener('scroll', function() {
-      const currentSection = getCurrentSection();
-      if (currentSection && currentSection !== lastSection) {
-        trackSectionView(currentSection);
-        lastSection = currentSection;
-      }
-    });
-  });
-
-  // Function to get current visible section
-  function getCurrentSection() {
-    const sections = document.querySelectorAll('section[id]');
-    const scrollPosition = window.scrollY + 100;
-    
-    for (const section of sections) {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-      
-      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-        return section.getAttribute('id');
-      }
-    }
-    
-    return null;
-  }
-
-  // Track page view
-  function trackPageView() {
-    // Increment local storage count for today
-    incrementLocalCount('pageviews');
-    
-    // Send analytics event
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'page_view', {
-        'page_title': document.title,
-        'page_location': window.location.href,
-        'page_path': window.location.pathname
-      });
-    }
-  }
-
-  // Track section view
-  function trackSectionView(section) {
-    // Increment local storage count for section
-    incrementLocalCount(`section_${section}`);
-    
-    // Send analytics event
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'section_view', {
-        'section': section
-      });
-    }
-  }
-
-  // Increment count in localStorage
-  function incrementLocalCount(key) {
-    // Get today's date in YYYY-MM-DD format
-    const today = new Date().toISOString().split('T')[0];
-    const storageKey = `${key}_${today}`;
-    
-    // Get current count from localStorage
-    let count = localStorage.getItem(storageKey) || 0;
-    count = parseInt(count) + 1;
-    
-    // Save updated count
-    localStorage.getItem(storageKey, count);
-    
-    // Update total count
-    const totalKey = `${key}_total`;
-    let totalCount = localStorage.getItem(totalKey) || 0;
-    totalCount = parseInt(totalCount) + 1;
-    localStorage.setItem(totalKey, totalCount);
-  }
-</script>
-
-<!-- GoatCounter Analytics -->
-<script data-goatcounter="https://minhducnguyen.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-
-<div class="view-counter text-center py-3 bg-light">
-  <div class="container">
-    <p class="mb-0">This page has been viewed <span id="view-count">--</span> times</p>
-  </div>
-</div>
-
-<script>
-  // Display view count from GoatCounter public API
-  fetch('https://minhducnguyen.goatcounter.com/counter/total.json')
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById('view-count').textContent = data.count.toLocaleString();
-    })
-    .catch(error => console.error('Error fetching view count:', error));
-</script>
+    <!-- GoatCounter Analytics (Optional - Replace with your own account) -->
+    <script data-goatcounter="https://minhnguyen.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
