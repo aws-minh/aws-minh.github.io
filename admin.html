@@ -1238,8 +1238,8 @@
                 const cos = await initTencentCloudSDK();
                 
                 await cos.putObject({
-                    Bucket: 'your-bucket-name',
-                    Region: 'your-region',
+                    Bucket: 'website-traffic-1352137578',
+                    Region: 'ap-bangkok',
                     Key: `analytics/${key}.json`,
                     Body: JSON.stringify(data)
                 });
@@ -1250,4 +1250,3 @@
                 return false;
             }
         }
-        */
