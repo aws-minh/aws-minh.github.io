@@ -117,20 +117,134 @@
             display: none;
         }
 
-        .iframe-container {
+        .map-container {
             position: relative;
             width: 100%;
-            height: 800px;
+            height: 400px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
             overflow: hidden;
         }
-
-        .iframe-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        
+        .location-table-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--gray);
+            border: none;
+            padding: 0.75rem 1rem;
+            font-weight: 500;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary);
+            background-color: transparent;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .nav-tabs {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .badge-count {
+            background-color: var(--primary);
+            color: white;
+            border-radius: 12px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .world-map-svg {
             width: 100%;
             height: 100%;
-            border: 0;
+            background-color: #f0f0f0;
+        }
+        
+        .country {
+            fill: #e0e0e0;
+            stroke: #fff;
+            stroke-width: 0.5;
+            transition: fill 0.3s ease;
+        }
+        
+        .country:hover {
+            fill: #bcd8ff;
+            cursor: pointer;
+        }
+        
+        .country.has-visitors {
+            fill: #bcd8ff;
+        }
+        
+        .country.selected {
+            fill: var(--primary) !important;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        
+        /* Location cards */
+        .location-card {
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            background-color: white;
+            transition: transform 0.2s;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .location-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .location-name {
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+        
+        .location-meta {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+        
+        .location-count {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
         }
     </style>
 </head>
@@ -247,15 +361,108 @@
                 </div>
             </div>
             
-            <!-- GoatCounter Embed (If using) -->
+            <!-- Location Analytics Section (Replacing External Analytics Dashboard) -->
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="card-title">External Analytics Dashboard</h2>
-                            <div class="iframe-container">
-                                <!-- Replace with your GoatCounter dashboard URL -->
-                                <iframe src="https://minhducnguyen.goatcounter.com/dashboard" allowfullscreen></iframe>
+                            <h2 class="card-title">Global Visitor Analytics</h2>
+                            
+                            <!-- Location stats overview -->
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <div class="stat-card p-3 border rounded">
+                                        <div class="stat-value" id="total-countries">--</div>
+                                        <div class="stat-label">Countries</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat-card p-3 border rounded">
+                                        <div class="stat-value" id="total-cities">--</div>
+                                        <div class="stat-label">Cities</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat-card p-3 border rounded">
+                                        <div class="stat-value" id="top-country">--</div>
+                                        <div class="stat-label">Top Country</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat-card p-3 border rounded">
+                                        <div class="stat-value" id="top-city">--</div>
+                                        <div class="stat-label">Top City</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Map Visualization -->
+                            <div class="map-container mb-4" id="world-map">
+                                <!-- SVG Map will be inserted here by JavaScript -->
+                            </div>
+                            
+                            <!-- Location Tables Tabs -->
+                            <ul class="nav nav-tabs" id="locationTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="countries-tab" data-bs-toggle="tab" data-bs-target="#countries" type="button" role="tab">
+                                        Countries <span class="badge-count ms-2" id="countries-count">0</span>
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="cities-tab" data-bs-toggle="tab" data-bs-target="#cities" type="button" role="tab">
+                                        Cities <span class="badge-count ms-2" id="cities-count">0</span>
+                                    </button>
+                                </li>
+                                <li class="nav-item ms-auto" role="presentation">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-sm" id="location-search" placeholder="Search locations...">
+                                        <button class="btn btn-sm btn-outline-secondary" type="button">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                            
+                            <div class="tab-content" id="locationTabContent">
+                                <!-- Countries Tab -->
+                                <div class="tab-pane fade show active" id="countries" role="tabpanel">
+                                    <div class="table-responsive location-table-container mt-3">
+                                        <table class="table" id="countries-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Country</th>
+                                                    <th>Visitors</th>
+                                                    <th>% of Total</th>
+                                                    <th>First Visit</th>
+                                                    <th>Last Visit</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Country data will be inserted here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <!-- Cities Tab -->
+                                <div class="tab-pane fade" id="cities" role="tabpanel">
+                                    <div class="table-responsive location-table-container mt-3">
+                                        <table class="table" id="cities-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>City</th>
+                                                    <th>Country</th>
+                                                    <th>Visitors</th>
+                                                    <th>% of Total</th>
+                                                    <th>Last Visit</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- City data will be inserted here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -264,7 +471,62 @@
         </div>
     </div>
     
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.2/d3.min.js"></script>
     <script>
+        // Sample location data (this would normally come from your analytics API)
+        const sampleLocationData = {
+            countries: [
+                { name: "United States", code: "US", visits: 427, firstVisit: "2024-01-15", lastVisit: "2024-04-05" },
+                { name: "Vietnam", code: "VN", visits: 312, firstVisit: "2024-01-20", lastVisit: "2024-04-06" },
+                { name: "Canada", code: "CA", visits: 198, firstVisit: "2024-02-05", lastVisit: "2024-04-04" },
+                { name: "United Kingdom", code: "GB", visits: 156, firstVisit: "2024-02-10", lastVisit: "2024-04-03" },
+                { name: "Germany", code: "DE", visits: 132, firstVisit: "2024-02-15", lastVisit: "2024-04-01" },
+                { name: "Australia", code: "AU", visits: 117, firstVisit: "2024-02-20", lastVisit: "2024-04-02" },
+                { name: "France", code: "FR", visits: 98, firstVisit: "2024-02-25", lastVisit: "2024-03-30" },
+                { name: "Japan", code: "JP", visits: 87, firstVisit: "2024-03-01", lastVisit: "2024-04-01" },
+                { name: "India", code: "IN", visits: 76, firstVisit: "2024-03-05", lastVisit: "2024-03-31" },
+                { name: "Brazil", code: "BR", visits: 65, firstVisit: "2024-03-10", lastVisit: "2024-03-28" },
+                { name: "South Korea", code: "KR", visits: 59, firstVisit: "2024-03-15", lastVisit: "2024-04-03" },
+                { name: "China", code: "CN", visits: 52, firstVisit: "2024-03-20", lastVisit: "2024-04-04" },
+                { name: "Italy", code: "IT", visits: 47, firstVisit: "2024-03-25", lastVisit: "2024-04-02" },
+                { name: "Spain", code: "ES", visits: 43, firstVisit: "2024-03-30", lastVisit: "2024-04-05" },
+                { name: "Netherlands", code: "NL", visits: 38, firstVisit: "2024-03-31", lastVisit: "2024-04-06" }
+            ],
+            cities: [
+                { name: "Atlanta", country: "United States", visits: 156, lastVisit: "2024-04-05" },
+                { name: "Ho Chi Minh City", country: "Vietnam", visits: 143, lastVisit: "2024-04-06" },
+                { name: "New York", country: "United States", visits: 98, lastVisit: "2024-04-04" },
+                { name: "Toronto", country: "Canada", visits: 87, lastVisit: "2024-04-04" },
+                { name: "London", country: "United Kingdom", visits: 76, lastVisit: "2024-04-03" },
+                { name: "Hanoi", country: "Vietnam", visits: 65, lastVisit: "2024-04-05" },
+                { name: "Berlin", country: "Germany", visits: 54, lastVisit: "2024-04-01" },
+                { name: "San Francisco", country: "United States", visits: 49, lastVisit: "2024-04-03" },
+                { name: "Sydney", country: "Australia", visits: 43, lastVisit: "2024-04-02" },
+                { name: "Paris", country: "France", visits: 41, lastVisit: "2024-03-30" },
+                { name: "Chicago", country: "United States", visits: 38, lastVisit: "2024-04-01" },
+                { name: "Vancouver", country: "Canada", visits: 36, lastVisit: "2024-04-02" },
+                { name: "Tokyo", country: "Japan", visits: 35, lastVisit: "2024-04-01" },
+                { name: "Mumbai", country: "India", visits: 32, lastVisit: "2024-03-31" },
+                { name: "Los Angeles", country: "United States", visits: 31, lastVisit: "2024-04-02" },
+                { name: "Singapore", country: "Singapore", visits: 29, lastVisit: "2024-04-03" },
+                { name: "Melbourne", country: "Australia", visits: 28, lastVisit: "2024-03-30" },
+                { name: "Dallas", country: "United States", visits: 27, lastVisit: "2024-04-04" },
+                { name: "Munich", country: "Germany", visits: 25, lastVisit: "2024-03-29" },
+                { name: "Seoul", country: "South Korea", visits: 24, lastVisit: "2024-04-03" },
+                { name: "Bangkok", country: "Thailand", visits: 23, lastVisit: "2024-04-02" },
+                { name: "Amsterdam", country: "Netherlands", visits: 22, lastVisit: "2024-04-06" },
+                { name: "Seattle", country: "United States", visits: 21, lastVisit: "2024-04-01" },
+                { name: "Barcelona", country: "Spain", visits: 20, lastVisit: "2024-04-05" },
+                { name: "Shanghai", country: "China", visits: 19, lastVisit: "2024-04-04" },
+                { name: "Boston", country: "United States", visits: 18, lastVisit: "2024-03-31" },
+                { name: "Rome", country: "Italy", visits: 17, lastVisit: "2024-04-02" },
+                { name: "Montreal", country: "Canada", visits: 16, lastVisit: "2024-03-30" },
+                { name: "São Paulo", country: "Brazil", visits: 15, lastVisit: "2024-03-28" },
+                { name: "Hong Kong", country: "China", visits: 14, lastVisit: "2024-03-29" }
+            ]
+        };
+
         // Simple admin login
         document.getElementById('admin-login-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -320,6 +582,9 @@
             loadViewsChart();
             loadSectionsChart();
             loadVisitorTable();
+            
+            // Load location data
+            loadLocationData();
         }
         
         // Calculate weekly views
@@ -522,6 +787,353 @@
                 return 'Unknown';
             }
         }
-    </script>
-</body>
-</html>
+        
+        // Load location data - This is where our new functionality begins
+        function loadLocationData() {
+            // In a real implementation, you'd fetch this data from your backend or analytics API
+            // For this demo, we'll use the sample data defined above
+            
+            // Update location stats overview
+            const totalCountries = sampleLocationData.countries.length;
+            const totalCities = sampleLocationData.cities.length;
+            
+            document.getElementById('total-countries').textContent = totalCountries;
+            document.getElementById('total-cities').textContent = totalCities;
+            
+            // Find top country and city
+            let topCountry = sampleLocationData.countries.reduce((prev, current) => 
+                (prev.visits > current.visits) ? prev : current);
+                
+            let topCity = sampleLocationData.cities.reduce((prev, current) => 
+                (prev.visits > current.visits) ? prev : current);
+                
+            document.getElementById('top-country').textContent = topCountry.name;
+            document.getElementById('top-city').textContent = topCity.name;
+            
+            // Update count badges
+            document.getElementById('countries-count').textContent = totalCountries;
+            document.getElementById('cities-count').textContent = totalCities;
+            
+            // Populate country table
+            populateCountryTable();
+            
+            // Populate city table
+            populateCityTable();
+            
+            // Load world map
+            loadWorldMap();
+        }
+        
+        // Populate country table
+        function populateCountryTable() {
+            const tableBody = document.getElementById('countries-table').querySelector('tbody');
+            tableBody.innerHTML = '';
+            
+            // Calculate total visits
+            const totalVisits = sampleLocationData.countries.reduce((sum, country) => sum + country.visits, 0);
+            
+            // Sort countries by visits (descending)
+            const sortedCountries = [...sampleLocationData.countries].sort((a, b) => b.visits - a.visits);
+            
+            sortedCountries.forEach(country => {
+                const row = document.createElement('tr');
+                
+                // Calculate percentage
+                const percentage = ((country.visits / totalVisits) * 100).toFixed(1);
+                
+                // Format dates
+                const firstVisit = new Date(country.firstVisit).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                const lastVisit = new Date(country.lastVisit).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <span class="flag-icon me-2">${getFlagEmoji(country.code)}</span>
+                            <span>${country.name}</span>
+                        </div>
+                    </td>
+                    <td>${country.visits.toLocaleString()}</td>
+                    <td>${percentage}%</td>
+                    <td>${firstVisit}</td>
+                    <td>${lastVisit}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Populate city table
+        function populateCityTable() {
+            const tableBody = document.getElementById('cities-table').querySelector('tbody');
+            tableBody.innerHTML = '';
+            
+            // Calculate total visits
+            const totalVisits = sampleLocationData.cities.reduce((sum, city) => sum + city.visits, 0);
+            
+            // Sort cities by visits (descending)
+            const sortedCities = [...sampleLocationData.cities].sort((a, b) => b.visits - a.visits);
+            
+            sortedCities.forEach(city => {
+                const row = document.createElement('tr');
+                
+                // Calculate percentage
+                const percentage = ((city.visits / totalVisits) * 100).toFixed(1);
+                
+                // Format last visit date
+                const lastVisit = new Date(city.lastVisit).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                // Find country code for flag
+                const countryObj = sampleLocationData.countries.find(c => c.name === city.country);
+                const countryCode = countryObj ? countryObj.code : '';
+                
+                row.innerHTML = `
+                    <td>${city.name}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <span class="flag-icon me-2">${getFlagEmoji(countryCode)}</span>
+                            <span>${city.country}</span>
+                        </div>
+                    </td>
+                    <td>${city.visits.toLocaleString()}</td>
+                    <td>${percentage}%</td>
+                    <td>${lastVisit}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Get flag emoji from country code
+        function getFlagEmoji(countryCode) {
+            if (!countryCode) return '';
+            
+            // Convert country code to flag emoji
+            const codePoints = countryCode
+                .toUpperCase()
+                .split('')
+                .map(char => 127397 + char.charCodeAt(0));
+                
+            return String.fromCodePoint(...codePoints);
+        }
+        
+        // Search functionality for location tables
+        document.getElementById('location-search').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            // Get active tab
+            const activeTab = document.querySelector('.nav-link.active').id;
+            
+            if (activeTab === 'countries-tab') {
+                // Search in countries table
+                const rows = document.querySelectorAll('#countries-table tbody tr');
+                
+                rows.forEach(row => {
+                    const countryName = row.querySelector('td:first-child').textContent.toLowerCase();
+                    
+                    if (countryName.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            } else if (activeTab === 'cities-tab') {
+                // Search in cities table
+                const rows = document.querySelectorAll('#cities-table tbody tr');
+                
+                rows.forEach(row => {
+                    const cityName = row.querySelector('td:first-child').textContent.toLowerCase();
+                    const countryName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                    
+                    if (cityName.includes(searchTerm) || countryName.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+        });
+        
+        // Load world map visualization
+        function loadWorldMap() {
+            // Get the map container dimensions
+            const mapContainer = document.getElementById('world-map');
+            const width = mapContainer.clientWidth;
+            const height = 400;
+            
+            // Create SVG element
+            const svg = d3.select('#world-map')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height)
+                .attr('class', 'world-map-svg');
+            
+            // Create tooltip div
+            const tooltip = d3.select('body').append('div')
+                .attr('class', 'tooltip')
+                .style('opacity', 0);
+            
+            // Define map projection
+            const projection = d3.geoNaturalEarth1()
+                .scale(width / 5.5)
+                .translate([width / 2, height / 2.2]);
+            
+            // Create geo path generator
+            const path = d3.geoPath()
+                .projection(projection);
+            
+            // Create a group for map elements
+            const g = svg.append('g');
+            
+            // Load world map data
+            d3.json('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
+                .then(function(worldData) {
+                    // Create country paths
+                    g.selectAll('path')
+                        .data(worldData.features)
+                        .enter()
+                        .append('path')
+                        .attr('d', path)
+                        .attr('class', 'country')
+                        .attr('id', d => `country-${d.properties.iso_a3}`)
+                        .classed('has-visitors', d => {
+                            // Check if this country has visitors
+                            return sampleLocationData.countries.some(c => c.code === d.properties.iso_a3);
+                        })
+                        .on('mouseover', function(event, d) {
+                            // Find country data
+                            const countryData = sampleLocationData.countries.find(c => 
+                                c.code === d.properties.iso_a3
+                            );
+                            
+                            if (countryData) {
+                                // Show tooltip
+                                tooltip.transition()
+                                    .duration(200)
+                                    .style('opacity', .9);
+                                    
+                                tooltip.html(`
+                                    <strong>${countryData.name}</strong><br>
+                                    Visitors: ${countryData.visits.toLocaleString()}
+                                `)
+                                    .style('left', (event.pageX + 10) + 'px')
+                                    .style('top', (event.pageY - 28) + 'px');
+                                    
+                                // Highlight country
+                                d3.select(this).classed('selected', true);
+                            }
+                        })
+                        .on('mouseout', function() {
+                            // Hide tooltip
+                            tooltip.transition()
+                                .duration(500)
+                                .style('opacity', 0);
+                                
+                            // Remove highlight
+                            d3.select(this).classed('selected', false);
+                        })
+                        .on('click', function(event, d) {
+                            // Find country data
+                            const countryData = sampleLocationData.countries.find(c => 
+                                c.code === d.properties.iso_a3
+                            );
+                            
+                            if (countryData) {
+                                // Filter cities table to show only cities from this country
+                                document.getElementById('cities-tab').click();
+                                
+                                const searchInput = document.getElementById('location-search');
+                                searchInput.value = countryData.name;
+                                searchInput.dispatchEvent(new Event('input'));
+                            }
+                        });
+                        
+                    // Add zoom functionality
+                    svg.call(d3.zoom()
+                        .extent([[0, 0], [width, height]])
+                        .scaleExtent([1, 8])
+                        .on('zoom', function(event) {
+                            g.attr('transform', event.transform);
+                        }));
+                })
+                .catch(function(error) {
+                    console.error('Error loading map data:', error);
+                    
+                    // Show error message in map container
+                    mapContainer.innerHTML = `
+                        <div class="alert alert-warning text-center m-3">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Unable to load map visualization. Please check your internet connection.
+                        </div>
+                    `;
+                });
+        }
+        
+        // Initialize Bootstrap tabs
+        document.querySelectorAll('.nav-link').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all tabs
+                document.querySelectorAll('.nav-link').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab panes
+                document.querySelectorAll('.tab-pane').forEach(p => {
+                    p.classList.remove('show', 'active');
+                });
+                
+                // Show selected tab pane
+                const target = this.getAttribute('data-bs-target');
+                document.querySelector(target).classList.add('show', 'active');
+            });
+        });
+        
+        // Store location data in localStorage (in a real implementation)
+        function storeLocationData(data) {
+            localStorage.setItem('location_data', JSON.stringify(data));
+        }
+        
+        // Function to track user location (in a real implementation)
+        function trackUserLocation() {
+            // In a real implementation, you would use a geolocation service
+            // For this demo, we'll just simulate it
+            console.log('Location tracking would be implemented here');
+            
+            // Example implementation using a third-party geolocation API:
+            /*
+            fetch('https://ipapi.co/json/')
+                .then(response => response.json())
+                .then(data => {
+                    const locationData = {
+                        country: data.country_name,
+                        countryCode: data.country_code,
+                        city: data.city,
+                        region: data.region,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    // Store the location data
+                    storeVisitWithLocation(locationData);
+                })
+                .catch(error => {
+                    console.error('Error tracking location:', error);
+                });
+            */
+        }
