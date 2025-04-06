@@ -12,7 +12,9 @@
 const tencentConfig = {
     Bucket: 'website-traffic-1352137578',
     Region: 'ap-bangkok',
-    // Credentials are fetched securely from the server
+    // Hardcoded credentials for development/testing
+    SecretId: 'IKIDureIj0OZXKxTvIUVOFza3JPNBrMfnncE',
+    SecretKey: 'WpyveBZklcKuLZhnkDZyDJqIgswxpV4U'
   };
   
   // Initialize the tracking system
@@ -318,24 +320,6 @@ const tencentConfig = {
   // Tencent Cloud COS Integration
   // ============================
   
-  // Fetch the authentication credentials from server
-  async function fetchTencentCredentials() {
-    try {
-      // In production, this would call your secure backend endpoint
-      // that provides temporary credentials using STS
-      const response = await fetch('/api/tencent-credentials');
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch Tencent Cloud credentials');
-      }
-      
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching credentials:', error);
-      return null;
-    }
-  }
-  
   // Initialize Tencent Cloud COS SDK
   async function initTencentCOS() {
     try {
@@ -345,21 +329,11 @@ const tencentConfig = {
         return null;
       }
       
-      // Get credentials
-      const credentials = await fetchTencentCredentials();
-      
-      if (!credentials) {
-        throw new Error('No valid credentials available');
-      }
-      
-      // Initialize COS instance
+      // Initialize COS instance with hardcoded credentials
       const cos = new COS({
-        SecretId: credentials.SecretId,
-        SecretKey: credentials.SecretKey,
-        // Use SecurityToken if using temporary credentials (STS)
-        SecurityToken: credentials.SecurityToken,
-        // Use automatic authentication if provided
-        getAuthorization: credentials.getAuthorization
+        SecretId: tencentConfig.SecretId,
+        SecretKey: tencentConfig.SecretKey,
+        Region: tencentConfig.Region
       });
       
       return cos;
@@ -475,7 +449,6 @@ const tencentConfig = {
         "Japan": 687,
         "France": 634,
         "Brazil": 589,
-        // Add more countries as needed
       },
       cities: {
         "Atlanta": 1245,
@@ -486,27 +459,35 @@ const tencentConfig = {
         "London": 598,
         "Toronto": 534,
         "Berlin": 487,
-        // Add more cities as needed
       },
       cityCountryMap: {
         "Atlanta": "United States",
-        "New York": "United States",
-        "San Francisco": "United States",
+        "New York": "United States","San Francisco": "United States",
         "Beijing": "China",
         "Bangalore": "India",
         "London": "United Kingdom",
         "Toronto": "Canada",
         "Berlin": "Germany",
-        // Add more mappings as needed
-      }
+        }
     };
-  }
-  
-  // Export functions for use in main script
-  window.portfolioAnalytics = {
+    }
+
+    // Export functions for use in main script
+    window.portfolioAnalytics = {
     initVisitorTracking,
     trackPageView,
     trackSectionView,
     syncDataToTencentCloud,
-    fetchTencentCloudData
-  };
+    fetchTencentCloudData,
+    markForSync  // Expose this function for external use
+    };
+
+    // Initialize tracking when script loads
+    try {
+    // Check if window and document are available (for browser environment)
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+        initVisitorTracking();
+    }
+    } catch (error) {
+    console.error('Error initializing visitor tracking:', error);
+    }
