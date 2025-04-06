@@ -12,23 +12,28 @@
 const tencentConfig = {
     Bucket: 'website-traffic-1352137578',
     Region: 'ap-bangkok',
-    // Hardcoded credentials for development/testing
+    Endpoint: 'https://website-traffic-1352137578.cos.ap-bangkok.myqcloud.com',
+    // IMPORTANT: Replace with actual credentials
     SecretId: 'IKIDureIj0OZXKxTvIUVOFza3JPNBrMfnncE',
     SecretKey: 'WpyveBZklcKuLZhnkDZyDJqIgswxpV4U'
   };
   
   // Initialize the tracking system
   function initVisitorTracking() {
-    // Capture page view
-    trackPageView();
-    
-    // Set up section tracking
-    trackSectionViews();
-    
-    // Schedule data sync to Tencent Cloud every 5 minutes
-    setInterval(syncDataToTencentCloud, 5 * 60 * 1000);
-    
-    console.log('Visitor tracking initialized');
+    try {
+      // Capture page view
+      trackPageView();
+      
+      // Set up section tracking
+      trackSectionViews();
+      
+      // Schedule data sync to Tencent Cloud every 5 minutes
+      setInterval(syncDataToTencentCloud, 5 * 60 * 1000);
+      
+      console.log('Visitor tracking initialized');
+    } catch (error) {
+      console.error('Error initializing visitor tracking:', error);
+    }
   }
   
   // Track page view
@@ -316,10 +321,6 @@ const tencentConfig = {
     console.log(`Sync complete. ${syncQueue.length - remainingQueue.length} items synced, ${remainingQueue.length} remaining.`);
   }
   
-  // ============================
-  // Tencent Cloud COS Integration
-  // ============================
-  
   // Initialize Tencent Cloud COS SDK
   async function initTencentCOS() {
     try {
@@ -333,7 +334,8 @@ const tencentConfig = {
       const cos = new COS({
         SecretId: tencentConfig.SecretId,
         SecretKey: tencentConfig.SecretKey,
-        Region: tencentConfig.Region
+        Region: tencentConfig.Region,
+        Endpoint: tencentConfig.Endpoint
       });
       
       return cos;
@@ -462,7 +464,8 @@ const tencentConfig = {
       },
       cityCountryMap: {
         "Atlanta": "United States",
-        "New York": "United States","San Francisco": "United States",
+        "New York": "United States",
+        "San Francisco": "United States",
         "Beijing": "China",
         "Bangalore": "India",
         "London": "United Kingdom",
@@ -472,22 +475,22 @@ const tencentConfig = {
     };
     }
 
-    // Export functions for use in main script
-    window.portfolioAnalytics = {
-    initVisitorTracking,
-    trackPageView,
-    trackSectionView,
-    syncDataToTencentCloud,
-    fetchTencentCloudData,
-    markForSync  // Expose this function for external use
-    };
+// Export functions for use in main script
+window.portfolioAnalytics = {
+  initVisitorTracking,
+  trackPageView,
+  trackSectionView,
+  syncDataToTencentCloud,
+  fetchTencentCloudData,
+  markForSync  // Expose this function for external use
+};
 
-    // Initialize tracking when script loads
-    try {
-    // Check if window and document are available (for browser environment)
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-        initVisitorTracking();
-    }
-    } catch (error) {
-    console.error('Error initializing visitor tracking:', error);
-    }
+// Initialize tracking when script loads
+try {
+  // Check if window and document are available (for browser environment)
+  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    initVisitorTracking();
+  }
+} catch (error) {
+  console.error('Error initializing visitor tracking:', error);
+}
