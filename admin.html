@@ -7,7 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary: #007AFF;
@@ -85,29 +84,6 @@
             letter-spacing: -0.02em;
         }
         
-        .chart-container {
-            position: relative;
-            height: 300px;
-            width: 100%;
-        }
-        
-        .table {
-            font-size: 0.9rem;
-        }
-        
-        .table th {
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-            color: var(--gray);
-            border-top: none;
-        }
-        
-        .table td {
-            vertical-align: middle;
-        }
-        
         .login-container {
             max-width: 400px;
             margin: 100px auto;
@@ -115,6 +91,22 @@
         
         #admin-content {
             display: none;
+        }
+
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 800px;
+            overflow: hidden;
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
     </style>
 </head>
@@ -149,81 +141,13 @@
         <!-- Admin Dashboard Content -->
         <div id="admin-content">
             <div class="row mt-4">
-                <div class="col-lg-3">
-                    <div class="card stat-card">
-                        <div class="card-body">
-                            <div class="stat-value" id="total-views">--</div>
-                            <div class="stat-label">Total Views</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="card stat-card">
-                        <div class="card-body">
-                            <div class="stat-value" id="today-views">--</div>
-                            <div class="stat-label">Today's Views</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="card stat-card">
-                        <div class="card-body">
-                            <div class="stat-value" id="weekly-views">--</div>
-                            <div class="stat-label">Weekly Views</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="card stat-card">
-                        <div class="card-body">
-                            <div class="stat-value" id="monthly-views">--</div>
-                            <div class="stat-label">Monthly Views</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row mt-4">
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title">Daily Views</h2>
-                            <div class="chart-container">
-                                <canvas id="viewsChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title">Section Popularity</h2>
-                            <div class="chart-container">
-                                <canvas id="sectionsChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row mt-4">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="card-title">Recent Page Views</h2>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Section</th>
-                                            <th>Views</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="recent-views-table">
-                                        <!-- Table rows will be inserted here -->
-                                    </tbody>
-                                </table>
+                            <h2 class="card-title">Analytics Dashboard</h2>
+                            <div class="iframe-container">
+                                <!-- Replace with your GoatCounter or StatCounter dashboard URL -->
+                                <iframe src="https://minhducnguyen.goatcounter.com/dashboard" allowfullscreen></iframe>
                             </div>
                         </div>
                     </div>
@@ -232,288 +156,33 @@
         </div>
     </div>
     
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script>
-        // Your Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAl2TsXsQBcK7CbRDIpOndvmx2o1Qb9xWs",
-            authDomain: "portfolio-view-counter.firebaseapp.com",
-            projectId: "portfolio-view-counter",
-            storageBucket: "portfolio-view-counter.appspot.com",
-            messagingSenderId: "845672988215",
-            appId: "1:845672988215:web:a19d3e6a9d3a00b92e7e2c",
-            measurementId: "G-V9N5K4GY2T"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const auth = firebase.auth();
-        
-        // Admin login form
+        // Simple admin login
         document.getElementById('admin-login-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
-            // Simple authentication - in a real app, use Firebase Authentication properly
+            // Simple authentication (hash for better security in production)
             if (username === 'admin' && password === 'portfolio2025') {
                 document.getElementById('login-form').style.display = 'none';
                 document.getElementById('admin-content').style.display = 'block';
-                loadDashboardData();
+                
+                // Store login state in sessionStorage
+                sessionStorage.setItem('admin-logged-in', 'true');
             } else {
                 document.getElementById('login-error').style.display = 'block';
             }
         });
         
-        // Load dashboard data
-        function loadDashboardData() {
-            // Get current date
-            const today = new Date();
-            const todayString = today.toISOString().split('T')[0];
-            
-            // Get stats
-            getTotalViews();
-            getTodayViews(todayString);
-            getWeeklyViews(today);
-            getMonthlyViews(today);
-            loadViewsChart();
-            loadSectionsChart();
-            loadRecentViews();
-        }
-        
-        // Get total views
-        function getTotalViews() {
-            db.collection('views').get().then((querySnapshot) => {
-                let totalViews = 0;
-                querySnapshot.forEach((doc) => {
-                    totalViews += doc.data().count;
-                });
-                document.getElementById('total-views').textContent = totalViews;
-            });
-        }
-        
-        // Get today's views
-        function getTodayViews(todayString) {
-            db.collection('views').doc(todayString).get().then((doc) => {
-                if (doc.exists) {
-                    document.getElementById('today-views').textContent = doc.data().count;
-                } else {
-                    document.getElementById('today-views').textContent = '0';
-                }
-            });
-        }
-        
-        // Get weekly views
-        function getWeeklyViews(today) {
-            // Calculate date 7 days ago
-            const weekAgo = new Date(today);
-            weekAgo.setDate(weekAgo.getDate() - 7);
-            
-            // Query for views in the past week
-            db.collection('views')
-                .where('date', '>=', weekAgo.toISOString().split('T')[0])
-                .get()
-                .then((querySnapshot) => {
-                    let weeklyViews = 0;
-                    querySnapshot.forEach((doc) => {
-                        weeklyViews += doc.data().count;
-                    });
-                    document.getElementById('weekly-views').textContent = weeklyViews;
-                });
-        }
-        
-        // Get monthly views
-        function getMonthlyViews(today) {
-            // Calculate date 30 days ago
-            const monthAgo = new Date(today);
-            monthAgo.setDate(monthAgo.getDate() - 30);
-            
-            // Query for views in the past month
-            db.collection('views')
-                .where('date', '>=', monthAgo.toISOString().split('T')[0])
-                .get()
-                .then((querySnapshot) => {
-                    let monthlyViews = 0;
-                    querySnapshot.forEach((doc) => {
-                        monthlyViews += doc.data().count;
-                    });
-                    document.getElementById('monthly-views').textContent = monthlyViews;
-                });
-        }
-        
-        // Load views chart
-        function loadViewsChart() {
-            // Get the past 14 days
-            const dates = [];
-            const viewsData = [];
-            
-            const today = new Date();
-            
-            // Create array of the past 14 days
-            for (let i = 13; i >= 0; i--) {
-                const date = new Date(today);
-                date.setDate(date.getDate() - i);
-                dates.push(date.toISOString().split('T')[0]);
-                viewsData.push(0); // Initialize with 0
+        // Check if already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            if (sessionStorage.getItem('admin-logged-in') === 'true') {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('admin-content').style.display = 'block';
             }
-            
-            // Query for views data
-            db.collection('views')
-                .where('date', '>=', dates[0])
-                .get()
-                .then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        const date = doc.data().date;
-                        const index = dates.indexOf(date);
-                        if (index !== -1) {
-                            viewsData[index] = doc.data().count;
-                        }
-                    });
-                    
-                    // Create chart
-                    const ctx = document.getElementById('viewsChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: dates.map(date => {
-                                const d = new Date(date);
-                                return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                            }),
-                            datasets: [{
-                                label: 'Page Views',
-                                data: viewsData,
-                                backgroundColor: 'rgba(0, 122, 255, 0.1)',
-                                borderColor: 'rgba(0, 122, 255, 1)',
-                                borderWidth: 2,
-                                tension: 0.3,
-                                fill: true
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    ticks: {
-                                        precision: 0
-                                    }
-                                }
-                            }
-                        }
-                    });
-                });
-        }
-        
-        // Load sections chart
-        function loadSectionsChart() {
-            // Get current date
-            const today = new Date();
-            const monthAgo = new Date(today);
-            monthAgo.setDate(monthAgo.getDate() - 30);
-            
-            // Query for section views in the past month
-            db.collection('sectionViews')
-                .where('date', '>=', monthAgo.toISOString().split('T')[0])
-                .get()
-                .then((querySnapshot) => {
-                    const sectionCounts = {};
-                    
-                    // Count views by section
-                    querySnapshot.forEach((doc) => {
-                        const section = doc.data().section;
-                        const count = doc.data().count;
-                        
-                        if (sectionCounts[section]) {
-                            sectionCounts[section] += count;
-                        } else {
-                            sectionCounts[section] = count;
-                        }
-                    });
-                    
-                    // Prepare data for chart
-                    const labels = Object.keys(sectionCounts).map(section => 
-                        section.charAt(0).toUpperCase() + section.slice(1)
-                    );
-                    const data = Object.values(sectionCounts);
-                    const backgroundColors = [
-                        'rgba(52, 199, 89, 0.7)',    // Green
-                        'rgba(0, 122, 255, 0.7)',    // Blue
-                        'rgba(255, 149, 0, 0.7)',    // Orange
-                        'rgba(175, 82, 222, 0.7)',   // Purple
-                        'rgba(255, 45, 85, 0.7)'     // Red
-                    ];
-                    
-                    // Create chart
-                    const ctx = document.getElementById('sectionsChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                data: data,
-                                backgroundColor: backgroundColors,
-                                borderWidth: 0
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                legend: {
-                                    position: 'right',
-                                    labels: {
-                                        boxWidth: 15,
-                                        font: {
-                                            size: 11
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                });
-        }
-        
-        // Load recent views
-        function loadRecentViews() {
-            db.collection('sectionViews')
-                .orderBy('date', 'desc')
-                .limit(10)
-                .get()
-                .then((querySnapshot) => {
-                    const tableBody = document.getElementById('recent-views-table');
-                    tableBody.innerHTML = '';
-                    
-                    querySnapshot.forEach((doc) => {
-                        const data = doc.data();
-                        const row = document.createElement('tr');
-                        
-                        // Format date
-                        const date = new Date(data.date);
-                        const formattedDate = date.toLocaleDateString('en-US', { 
-                            month: 'short', 
-                            day: 'numeric',
-                            year: 'numeric'
-                        });
-                        
-                        // Format section name
-                        const section = data.section.charAt(0).toUpperCase() + data.section.slice(1);
-                        
-                        row.innerHTML = `
-                            <td>${formattedDate}</td>
-                            <td>${section}</td>
-                            <td>${data.count}</td>
-                        `;
-                        
-                        tableBody.appendChild(row);
-                    });
-                });
-        }
+        });
     </script>
 </body>
 </html>
