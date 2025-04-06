@@ -4,11 +4,361 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minh Duc Nguyen | Data Engineer & BI Analyst</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* Silicon Valley Inspired Styles */
+        :root {
+            --primary: #007AFF;
+            --secondary: #5AC8FA;
+            --dark: #121212;
+            --light: #F5F5F7;
+            --gray: #86868b;
+        }Today
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            letter-spacing: -0.015em;
+            padding-top: 70px;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            letter-spacing: -0.03em;
+        }
+        
+        .display-title {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        
+        .badge {
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            font-size: 0.75rem;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: rgba(245, 245, 247, 0.8) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            padding: 0.5rem 1rem !important;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+        
+        .nav-link.active {
+            color: var(--primary) !important;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(rgba(255,255,255,0.1) 8%, transparent 8%);
+            background-position: 0 0;
+            background-size: 25px 25px;
+            opacity: 0.3;
+        }
+        
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-body {
+            padding: 2rem;
+        }
+        
+        .card .card-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        /* Section spacing */
+        section {
+            padding: 100px 0;
+        }
+        
+        section:nth-child(even) {
+            background-color: white;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        /* Buttons */
+        .btn {
+            border-radius: 30px;
+            padding: 0.6rem 1.5rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #0062cc;
+            border-color: #0062cc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 122, 255, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0;
+        }
+        
+        footer a {
+            color: rgba(255,255,255,0.8);
+            transition: color 0.2s ease;
+        }
+        
+        footer a:hover {
+            color: white;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* Skills section */
+        .skill-card {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 16px;
+            background-color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .skill-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Project section */
+        .project-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-title {
+            margin-bottom: 0;
+            font-weight: 600;
+        }
+        
+        .project-link {
+            margin-left: auto;
+        }
+        
+        .project-tags {
+            margin: 1.5rem 0;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: rgba(0, 122, 255, 0.1);
+            color: var(--primary);
+            border-radius: 30px;
+            padding: 0.3rem 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        /* Project description */
+        .project-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            max-width: 95%;
+        }
+        
+        .feature-list li {
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+        
+        /* Contact form */
+        .form-control {
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .display-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .card-body {
+                padding: 1.5rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+        
+        /* Google Form container */
+        .google-form-container {
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            background-color: white;
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        /* View Counter Styles */
+        .view-counter {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 30px;
+            display: inline-block;
+        }
+        
+        .view-counter-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .view-counter-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+    </style>
 </head>
-<body>
+<body data-bs-spy="scroll" data-bs-target="#navbarNav" data-bs-offset="100">
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#home">Minh Duc Nguyen</a>
@@ -17,68 +367,80 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="admin/dashboard.html">Admin</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#experience">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html" target="_blank"><i class="fas fa-chart-line"></i></a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <main>
+        <!-- Hero Section -->
         <section id="home" class="hero text-white text-center">
-            <div class="container">
-                <h1 class="display-4">Minh Duc Nguyen</h1>
-                <p class="lead">Data Engineer & BI Analyst</p>
-                <div class="cta-buttons mt-4">
-                    <a href="#contact" class="btn btn-outline-light">Contact Me</a>
-                    <a href="#projects" class="btn btn-light">View Projects</a>
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 fade-in">
+                        <h1 class="display-title">Minh Duc Nguyen</h1>
+                        <p class="lead mb-4">Data Engineer & BI Analyst</p>
+                        <div class="d-flex justify-content-center mt-4">
+                            <a href="#contact" class="btn btn-outline-light me-2">Let's Talk</a>
+                            <a href="#projects" class="btn btn-light">View Projects</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <!-- About Section -->
         <section id="about" class="py-5">
-            <div class="container">
-                <h2 class="text-center mb-4">About Me</h2>
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <div class="card">
+            <div class="container px-4 px-lg-5">
+                <h2 class="section-title">About Me</h2>
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card border-0 shadow-sm fade-in">
                             <div class="card-body">
-                                <p>I'm a data professional specializing in business intelligence, data engineering, and cloud technologies. 
-                                With experience as a BI Analyst and a passion for turning complex data into actionable insights, 
-                                I help organizations make data-driven decisions.</p>
-                                
+                                <p class="lead">
+                                    I'm a data professional with expertise in business intelligence, data engineering, and cloud technologies. 
+                                    I used to work as a BI Analyst at Koki Holdings America, I specialize in building data warehouse solutions, 
+                                    creating insightful visualizations, and managing reporting systems.
+                                </p>
+                                <p>
+                                    I hold a degree in Computer Information Systems with a concentration in Big Data from Georgia State University 
+                                    and am currently pursuing a Master of Engineering in Artificial Intelligence at Johns Hopkins University.
+                                </p>
+                                <p>
+                                    I'm passionate about turning complex data into actionable insights and building scalable, containerized applications 
+                                    that solve real business problems.
+                                </p>
                                 <div class="row mt-4">
                                     <div class="col-md-6">
-                                        <h5>Education</h5>
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <strong>Johns Hopkins University</strong><br>
-                                                MEng in Artificial Intelligence<br>
-                                                2025 - 2028
-                                            </li>
-                                            <li class="mt-3">
-                                                <strong>Georgia State University</strong><br>
-                                                Computer Information Systems<br>
-                                                2018 - 2021
-                                            </li>
-                                        </ul>
+                                        <h5 class="mb-3">Education</h5>
+                                        <p class="mb-2"><strong>Johns Hopkins University</strong><br>MEng in Artificial Intelligence<br>2025 - 2028</p>
+                                        <p><strong>Georgia State University</strong><br>Computer Information Systems, Big Data Concentration<br>2018 - 2021</p>
                                     </div>
                                     <div class="col-md-6">
-                                        <h5>Certifications</h5>
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <i class="fas fa-certificate text-primary"></i>
-                                                Certified Kubernetes Application Developer (CKAD)
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-certificate text-primary"></i>
-                                                Microsoft Power BI Analyst (PL-300)
-                                            </li>
-                                        </ul>
+                                        <h5 class="mb-3">Certifications</h5>
+                                        <p class="mb-2"><i class="fas fa-certificate text-primary me-2"></i>Certified Kubernetes Application Developer (CKAD)</p>
+                                        <p><i class="fas fa-certificate text-primary me-2"></i>Microsoft Power BI Analyst (PL-300)</p>
                                     </div>
                                 </div>
                             </div>
@@ -88,105 +450,560 @@
             </div>
         </section>
 
-        <section id="skills" class="bg-light py-5">
-            <div class="container">
-                <h2 class="text-center mb-4">Skills</h2>
+        <!-- Skills Section -->
+        <section id="skills" class="py-5 bg-white">
+            <div class="container px-4 px-lg-5">
+                <h2 class="section-title">My Skills</h2>
                 <div class="row">
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-4 mb-4 fade-in delay-1">
                         <div class="skill-card">
-                            <i class="fas fa-database"></i>
-                            <h3>Data Engineering</h3>
-                            <p>ETL pipelines, Snowflake, AWS/Azure/GCP, SQL, Python</p>
+                            <div class="skill-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Data Engineering</h3>
+                            <p>ETL pipeline design, data warehousing with Snowflake, AWS/Azure/GCP integration, SQL Server, Postgres</p>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-4 mb-4 fade-in delay-2">
                         <div class="skill-card">
-                            <i class="fas fa-chart-line"></i>
-                            <h3>Business Intelligence</h3>
-                            <p>Power BI, SSRS, Dashboard Creation, Data Visualization</p>
+                            <div class="skill-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Business Intelligence</h3>
+                            <p>Data visualization with Power BI, SSRS reports, dashboard creation for decision making, DAX formulas</p>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-4 mb-4 fade-in delay-3">
                         <div class="skill-card">
-                            <i class="fas fa-code"></i>
-                            <h3>Development</h3>
-                            <p>Flask, Docker, Kubernetes, Microservices, CI/CD</p>
+                            <div class="skill-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Development</h3>
+                            <p>Python, Kubernetes, Docker, Kafka, PySpark, Linux, Flask, SQLAlchemy, containerized applications</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Projects Section -->
         <section id="projects" class="py-5">
-            <div class="container">
-                <h2 class="text-center mb-4">Projects</h2>
-                <div class="row">
-                    <div class="col-md-6 mb-4">
-                        <div class="project-card">
-                            <h3>Big Bulk Comp Website</h3>
-                            <p>B2B bulk purchasing platform with role-based access and custom pricing</p>
-                            <div class="project-tags">
-                                <span>Flask</span>
-                                <span>SQLAlchemy</span>
-                                <span>Authentication</span>
-                            </div>
-                            <a href="#" class="btn btn-primary">View Project</a>
+            <div class="container px-4 px-lg-5">
+                <h2 class="section-title">Projects</h2>
+                
+                <!-- Project 1 -->
+                <div class="card mb-5 fade-in">
+                    <div class="card-body">
+                        <div class="project-header">
+                            <h3 class="project-title h3">Big Bulk Comp Website</h3>
+                            <a href="https://blindly-included-wasp.ngrok-free.app/" target="_blank" class="project-link btn btn-sm btn-outline-primary">
+                                <i class="fas fa-external-link-alt me-1"></i> Visit
+                            </a>
+                        </div>
+                        <p class="project-description">
+                            A comprehensive B2B bulk purchasing platform for restaurants with secure role-based access controls 
+                            and advanced business features.
+                        </p>
+                        <div class="mb-3">
+                            <strong>Key Features:</strong>
+                            <ul class="feature-list">
+                                <li>Engineered a B2B bulk purchasing platform using Flask and SQLAlchemy</li>
+                                <li>Implemented role-based access controls for restaurants, account managers, and administrators</li>
+                                <li>Developed custom pricing negotiations and real-time inventory management</li>
+                                <li>Created an encrypted messaging system between clients and account managers</li>
+                            </ul>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Flask</span>
+                            <span class="tag">SQLAlchemy</span>
+                            <span class="tag">Authentication</span>
+                            <span class="tag">Encryption</span>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="project-card">
-                            <h3>Kafka Temperature Dashboard</h3>
-                            <p>Real-time data visualization for sensor streams using Kafka and Flask</p>
-                            <div class="project-tags">
-                                <span>Kafka</span>
-                                <span>Flask</span>
-                                <span>Docker</span>
-                            </div>
-                            <a href="#" class="btn btn-primary">View Project</a>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="card mb-5 fade-in delay-1">
+                    <div class="card-body">
+                        <div class="project-header">
+                            <h3 class="project-title h3">Demo Nails & Spa Website</h3>
+                            <a href="https://ideally-assuring-foal.ngrok-free.app" target="_blank" class="project-link btn btn-sm btn-outline-primary">
+                                <i class="fas fa-external-link-alt me-1"></i> Visit
+                            </a>
+                        </div>
+                        <p class="project-description">
+                            A comprehensive flask-based salon booking system with user authentication, appointment scheduling, 
+                            and an integrated chatbot assistant.
+                        </p>
+                        <div class="mb-3">
+                            <strong>Key Features:</strong>
+                            <ul class="feature-list">
+                                <li>Developed a flask-based salon booking system with user authentication</li>
+                                <li>Created an integrated chatbot assistant for customer interactions</li>
+                                <li>Implemented a secure admin dashboard with staff management features</li>
+                                <li>Enhanced business operations through booking overview and database administration</li>
+                            </ul>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Flask</span>
+                            <span class="tag">Authentication</span>
+                            <span class="tag">Chatbot</span>
+                            <span class="tag">Dashboard</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="card mb-5 fade-in delay-2">
+                    <div class="card-body">
+                        <div class="project-header">
+                            <h3 class="project-title h3">Kafka Temperature Visualization</h3>
+                            <a href="https://moray-strong-socially.ngrok-free.app" target="_blank" class="project-link btn btn-sm btn-outline-primary">
+                                <i class="fas fa-external-link-alt me-1"></i> Visit
+                            </a>
+                        </div>
+                        <p class="project-description">
+                            A real-time data visualization application using Kafka and Flask for monitoring sensor data streams,
+                            featuring interactive charts and dashboards.
+                        </p>
+                        <div class="mb-3">
+                            <strong>Key Features:</strong>
+                            <ul class="feature-list">
+                                <li>Developed a real-time visualization application for sensor data streams</li>
+                                <li>Created interactive charts and dashboards for data exploration</li>
+                                <li>Implemented Docker Compose infrastructure for a multi-container application</li>
+                                <li>Integrated Kafka broker, Zookeeper, data producer, and visualization components</li>
+                            </ul>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag">Kafka</span>
+                            <span class="tag">Flask</span>
+                            <span class="tag">Docker Compose</span>
+                            <span class="tag">Data Visualization</span>
+                            <span class="tag">Real-time Processing</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="card mb-5 fade-in delay-3">
+                    <div class="card-body">
+                        <div class="project-header">
+                            <h3 class="project-title h3">eCommerce Platform</h3>
+                            <a href="https://simple-singularly-haddock.ngrok-free.app" target="_blank" class="project-link btn btn-sm btn-outline-primary">
+                                <i class="fas fa-external-link-alt me-1"></i> Visit
+                            </a>
+                        </div>
+                        <p class="project-description">
+                            A full-featured e-commerce web application built from the ground up, replicating core functionalities 
+                            of an online marketplace including product browsing, search, user authentication, shopping cart, and order management.
+                        </p>
+                        <div class="mb-3">
+                            <strong>Key Features:</strong>
+                            <ul class="feature-list">
+                                <li>Developed a full-stack e-commerce application with user authentication, product search, 
+                                    shopping cart, and order management</li>
+                                <li>Engineered a scalable microservices architecture with Docker and Kubernetes, supporting 
+                                    horizontal pod autoscaling and load balancing</li>
+                                <li>Implemented robust security features including CSRF protection, password hashing, 
+                                    role-based access control, and comprehensive logging</li>
+                            </ul>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag">Flask</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">Spark</span>
+                            <span class="tag">Kubernetes</span>
+                            <span class="tag">eCommerce</span>
+                            <span class="tag">Microservices</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="bg-light py-5">
+        <!-- Experience Section -->
+        <section id="experience" class="py-5 bg-white">
+            <div class="container px-4 px-lg-5">
+                <h2 class="section-title">Work Experience</h2>
+                
+                <div class="timeline">
+                    <!-- Job 1 -->
+                    <div class="card mb-4 fade-in">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="h4 mb-0">BI Analyst</h3>
+                                <span class="badge bg-primary">Feb 2023 - May 2024</span>
+                            </div>
+                            <p class="text-muted mb-3">Koki Holdings America</p>
+                            <ul>
+                                <li>Oversaw report requests and managed SSRS Reporting Site</li>
+                                <li>Built data warehouse solutions using SSMS and Spark</li>
+                                <li>Worked with BI tools like Power BI, paginated reports, and SSRS Report Builder</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Job 2 -->
+                    <div class="card mb-4 fade-in delay-1">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="h4 mb-0">Data Engineer</h3>
+                                <span class="badge bg-primary">Feb 2022 - May 2022</span>
+                            </div>
+                            <p class="text-muted mb-3">Talent Path</p>
+                            <ul>
+                                <li>Designed ETL Pipeline within AWS ecosystem with Snowflake Warehouse</li>
+                                <li>Automated modeling and transformation using AWS stack (Glue, Lambda)</li>
+                                <li>Developed skills in storytelling using tools like Sage Maker and Power BI</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Job 3 -->
+                    <div class="card mb-4 fade-in delay-2">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="h4 mb-0">Analyst</h3>
+                                <span class="badge bg-primary">Sept 2021 - Jan 2022</span>
+                            </div>
+                            <p class="text-muted mb-3">Chau Phan Financial Services</p>
+                            <ul>
+                                <li>Transformed customer data for analysis using Python and Power Query/Power BI</li>
+                                <li>Provided in-depth information analysis with visualization about health insurance and government benefits</li>
+                                <li>Assisted, invited, and enrolled over 800 Obama Healthcare Plans</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Job 4 -->
+                    <div class="card fade-in delay-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="h4 mb-0">IT Intern</h3>
+                                <span class="badge bg-primary">Aug 2020 - Dec 2020</span>
+                            </div>
+                            <p class="text-muted mb-3">Fulton County Government</p>
+                            <ul>
+                                <li>Assisted the CJIS IT department to generate and automate a learning model using RStudio</li>
+                                <li>Utilized multiple tools (Tableau Prep, RStudio, and GitHub lab) to set up workflow</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+                <!-- Enhanced View Counter -->
+        <div class="view-counter-section py-4 text-center">
             <div class="container">
-                <h2 class="text-center mb-4">Contact Me</h2>
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <form id="contactForm">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" required>
+                <div class="view-counter-card">
+                    <div class="view-counter-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="view-counter-stats">
+                        <div class="counter-item">
+                            <div class="counter-value" id="view-count">--</div>
+                            <div class="counter-label">Total Views</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-5">
+            <div class="container px-4 px-lg-5">
+                <h2 class="section-title">Get In Touch</h2>
+                
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 fade-in">
+                        <div class="row mb-5">
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="card h-100 text-center py-4">
+                                    <div class="card-body">
+                                        <i class="fas fa-envelope text-primary mb-3" style="font-size: 2rem;"></i>
+                                        <h4 class="h5 mb-3">Email</h4>
+                                        <a href="mailto:ducminh97@aol.com" class="text-decoration-none">ducminh97@aol.com</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" required>
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="card h-100 text-center py-4">
+                                    <div class="card-body">
+                                        <i class="fas fa-phone text-primary mb-3" style="font-size: 2rem;"></i>
+                                        <h4 class="h5 mb-3">Phone</h4>
+                                         <div class="phone-numbers">
+                                        <div class="phone-item mb-2">
+                                            <span class="flag-icon">VN</span>
+                                             <span>(034) 745-7180</span>
+                                        </div>
+                                        <div class="phone-item">
+                                            <span class="flag-icon">USA</span>
+                                             <span>(470) 531-7542</span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" rows="4" required></textarea>
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="card h-100 text-center py-4">
+                                    <div class="card-body">
+                                       <i class="fas fa-map-marker-alt text-primary mb-3" style="font-size: 2rem;"></i>
+                                        <h4 class="h5 mb-3">Location</h4>
+                                        <span>Atlanta, GA</span>
+                                    </div>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Send Message</button>
-                        </form>
+                        </div>
+                        
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <h3 class="h4 text-center mb-4">Send Me a Message</h3>
+                                <div class="google-form-container" style="overflow: hidden;">
+                                    <iframe 
+                                        src="https://docs.google.com/forms/d/19hzxDwoMZ3SoTe5ZAQ2XUarXzaryPCilDICSfUi3KGA/viewform?embedded=true" 
+                                        width="100%" 
+                                        height="680" 
+                                        frameborder="0" 
+                                        marginheight="0" 
+                                        marginwidth="0"
+                                        style="margin-top: -50px;">
+                                        Loading...
+                                    </iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-dark text-white py-4">
-        <div class="container text-center">
-            <div class="social-links">
-                <a href="https://linkedin.com/in/mn97" target="_blank" class="text-white mx-2"><i class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/aws-minh" target="_blank" class="text-white mx-2"><i class="fab fa-github"></i></a>
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3">Minh Duc Nguyen</h5>
+                    <p class="mb-3">BI Analyst & Data Engineer</p>
+                    <p>&copy; 2025 Minh Duc Nguyen. All rights reserved.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-3">Connect With Me</h5>
+                    <div class="d-flex mb-4">
+                        <a href="https://linkedin.com/in/mn97" target="_blank" class="social-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/aws-minh" target="_blank" class="social-icon">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:ducminh97@aol.com" class="social-icon">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <p class="mt-3">&copy; 2024 Minh Duc Nguyen. All Rights Reserved.</p>
         </div>
     </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/analytics.js"></script>
-    <script src="assets/js/contact.js"></script>
+    <!-- View Tracking Script -->
+    <script>
+        // Initialize counters in localStorage if they don't exist
+        if (!localStorage.getItem('total_views')) {
+            localStorage.setItem('total_views', '0');
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track page view on load
+            trackPageView();
+            
+            // Update view counter on page
+            updateViewCounter();
+            
+            // Track section views when scrolling
+            let lastSection = getCurrentSection();
+            window.addEventListener('scroll', function() {
+                const currentSection = getCurrentSection();
+                if (currentSection && currentSection !== lastSection) {
+                    trackSectionView(currentSection);
+                    lastSection = currentSection;
+                }
+            });
+            
+            // Add active class to navbar links based on current section
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            
+            function highlightNavLink() {
+                let scrollPosition = window.scrollY + 100;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === '#' + sectionId) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', highlightNavLink);
+            highlightNavLink(); // Call once on load
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Reveal animations on scroll
+            const animateElements = document.querySelectorAll('.fade-in');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+        // Function to get current visible section
+        function getCurrentSection() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPosition = window.scrollY + 100;
+            
+            for (const section of sections) {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    return section.getAttribute('id');
+                }
+            }
+            
+            return null;
+        }
+
+        // Track page view
+        function trackPageView() {
+            // Get today's date in YYYY-MM-DD format
+            const today = new Date().toISOString().split('T')[0];
+            const storageKey = `pageviews_${today}`;
+            
+            // Get current count from localStorage
+            let count = localStorage.getItem(storageKey) || 0;
+            count = parseInt(count) + 1;
+            
+            // Save updated count
+            localStorage.setItem(storageKey, count);
+            
+            // Update total count
+            let totalCount = localStorage.getItem('total_views') || 0;
+            totalCount = parseInt(totalCount) + 1;
+            localStorage.setItem('total_views', totalCount);
+            
+            // Send data to counter API
+            const visitorData = {
+                url: window.location.pathname,
+                referrer: document.referrer || 'direct',
+                screenWidth: window.innerWidth,
+                screenHeight: window.innerHeight,
+                date: today,
+                userAgent: navigator.userAgent,
+                language: navigator.language
+            };
+            
+            // Store visitor data in localStorage
+            const visitorHistory = JSON.parse(localStorage.getItem('visitor_history') || '[]');
+            visitorHistory.push({
+                timestamp: new Date().toISOString(),
+                data: visitorData
+            });
+            
+            // Keep only the latest 100 entries
+            if (visitorHistory.length > 100) {
+                visitorHistory.shift();
+            }
+            
+            localStorage.setItem('visitor_history', JSON.stringify(visitorHistory));
+            
+            // Update counter display
+            updateViewCounter();
+        }
+
+        // Track section view
+        function trackSectionView(section) {
+            // Get today's date in YYYY-MM-DD format
+            const today = new Date().toISOString().split('T')[0];
+            const storageKey = `section_${section}_${today}`;
+            
+            // Get current count from localStorage
+            let count = localStorage.getItem(storageKey) || 0;
+            count = parseInt(count) + 1;
+            
+            // Save updated count
+            localStorage.setItem(storageKey, count);
+            
+            // Store section view in history
+            const sectionHistory = JSON.parse(localStorage.getItem('section_history') || '[]');
+            sectionHistory.push({
+                timestamp: new Date().toISOString(),
+                section: section
+            });
+            
+            // Keep only the latest 100 entries
+            if (sectionHistory.length > 100) {
+                sectionHistory.shift();
+            }
+            
+            localStorage.setItem('section_history', JSON.stringify(sectionHistory));
+        }
+
+        // Update view counter display
+        function updateViewCounter() {
+            const viewCountElement = document.getElementById('view-count');
+            if (viewCountElement) {
+                const totalViews = localStorage.getItem('total_views') || 0;
+                viewCountElement.textContent = parseInt(totalViews).toLocaleString();
+            }
+        }
+    </script>
+    
+    <!-- GoatCounter Analytics (Optional - Replace with your own account) -->
+    <script data-goatcounter="https://minhducnguyen.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
+    
 </html>
