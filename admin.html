@@ -419,9 +419,7 @@
                                         <p>Top City</p>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <!-- World Map -->
+                            </div><!-- World Map -->
                             <div id="worldMapChart" class="mb-4"></div>
                             
                             <!-- Country & City Data Tabs -->
@@ -647,7 +645,6 @@
                 alert('There was an error loading some dashboard data. Please refresh and try again.');
             }
         }
-        
         // Calculate weekly views
         async function calculateWeeklyViews() {
             let weeklyViews = 0;
@@ -802,8 +799,7 @@
                 const formattedTime = timestamp.toLocaleString('en-US', {
                     month: 'short',
                     day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                    hour: '2-digit'
                 });
                 
                 // Create row content based on entry type
