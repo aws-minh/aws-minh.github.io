@@ -8,11 +8,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Tencent Cloud COS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/cos-js-sdk-v5/dist/cos.min.js"></script>
     <!-- amCharts Resources -->
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <!-- Portfolio Analytics Script -->
+    <script src="/js/tencent-cloud-integration.js"></script>
     <style>
         :root {
             --primary: #007AFF;
@@ -213,6 +217,47 @@
             transform: translateY(-50%);
             color: var(--gray);
         }
+        
+        .sync-status {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .sync-status .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+        }
+        
+        .sync-status.connected .status-indicator {
+            background-color: var(--success);
+        }
+        
+        .sync-status.syncing .status-indicator {
+            background-color: var(--warning);
+            animation: pulse 1.5s infinite;
+        }
+        
+        .sync-status.offline .status-indicator {
+            background-color: var(--danger);
+        }
+        
+        .action-buttons {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -245,6 +290,18 @@
         
         <!-- Admin Dashboard Content -->
         <div id="admin-content">
+            <!-- Tencent Cloud Status Bar -->
+            <div class="sync-status offline" id="cloud-status">
+                <div class="status-indicator"></div>
+                <div>
+                    <span id="status-text">Connecting to Tencent Cloud...</span>
+                    <small id="sync-details" class="text-muted d-block"></small>
+                </div>
+                <div class="ms-auto">
+                    <button id="force-sync-btn" class="btn btn-sm btn-outline-primary">Force Sync</button>
+                </div>
+            </div>
+            
             <div class="row mt-4">
                 <div class="col-lg-3">
                     <div class="card stat-card">
@@ -316,6 +373,7 @@
                                             <th>Section</th>
                                             <th>Screen Size</th>
                                             <th>Browser</th>
+                                            <th>Location</th>
                                         </tr>
                                     </thead>
                                     <tbody id="visitor-table">
@@ -328,7 +386,7 @@
                 </div>
             </div>
             
-            <!-- Geographic Analytics Dashboard (Replacing External Analytics Dashboard) -->
+            <!-- Geographic Analytics Dashboard -->
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="card">
@@ -423,6 +481,17 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <!-- Data Management -->
+                            <div class="action-buttons">
+                                <button id="export-data-btn" class="btn btn-outline-primary">
+                                    <i class="fas fa-download me-2"></i>Export Data
+                                </button>
+                                <button id="import-data-btn" class="btn btn-outline-secondary">
+                                    <i class="fas fa-upload me-2"></i>Import Data
+                                </button>
+                                <input type="file" id="import-file" accept=".json" style="display: none;">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -432,6 +501,10 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Variables to track cloud connection state
+        let cloudConnected = false;
+        let lastSyncTime = null;
+        
         // Simple admin login
         document.getElementById('admin-login-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -447,6 +520,9 @@
                 // Store login state in sessionStorage
                 sessionStorage.setItem('admin-logged-in', 'true');
                 
+                // Initialize Tencent Cloud connection
+                initializeCloudConnection();
+                
                 // Load dashboard data
                 loadDashboardData();
             } else {
@@ -459,45 +535,120 @@
             if (sessionStorage.getItem('admin-logged-in') === 'true') {
                 document.getElementById('login-form').style.display = 'none';
                 document.getElementById('admin-content').style.display = 'block';
+                
+                // Initialize Tencent Cloud connection
+                initializeCloudConnection();
+                
+                // Load dashboard data
                 loadDashboardData();
             }
+            
+            // Set up event listeners for data management buttons
+            setupDataManagementButtons();
         });
         
-        // Load dashboard data from Tencent Cloud (simulated)
-        function loadDashboardData() {
+        // Initialize connection to Tencent Cloud
+        async function initializeCloudConnection() {
+            // Update status to connecting
+            updateCloudStatus('syncing', 'Connecting to Tencent Cloud...');
+            
+            try {
+                // Try to initialize Tencent COS
+                const cos = await window.portfolioAnalytics.initTencentCOS();
+                
+                if (cos) {
+                    // Connection successful
+                    cloudConnected = true;
+                    lastSyncTime = new Date();
+                    updateCloudStatus('connected', 'Connected to Tencent Cloud');
+                    
+                    // Force initial sync of local data to cloud
+                    await window.portfolioAnalytics.syncDataToTencentCloud();
+                    
+                    // Schedule regular syncs
+                    setInterval(async () => {
+                        await window.portfolioAnalytics.syncDataToTencentCloud();
+                        lastSyncTime = new Date();
+                        updateSyncDetails();
+                    }, 5 * 60 * 1000); // Every 5 minutes
+                } else {
+                    // Connection failed
+                    cloudConnected = false;
+                    updateCloudStatus('offline', 'Using local storage (Cloud unavailable)');
+                }
+            } catch (error) {
+                console.error('Error connecting to Tencent Cloud:', error);
+                cloudConnected = false;
+                updateCloudStatus('offline', 'Using local storage (Connection error)');
+            }
+        }
+        
+        // Update cloud connection status display
+        function updateCloudStatus(status, message) {
+            const statusElement = document.getElementById('cloud-status');
+            const statusTextElement = document.getElementById('status-text');
+            
+            // Remove all status classes
+            statusElement.classList.remove('connected', 'syncing', 'offline');
+            
+            // Add current status class
+            statusElement.classList.add(status);
+            
+            // Update status message
+            statusTextElement.textContent = message;
+            
+            // Update sync details
+            updateSyncDetails();
+        }
+        
+        // Update sync details display
+        function updateSyncDetails() {
+            const syncDetailsElement = document.getElementById('sync-details');
+            
+            if (cloudConnected && lastSyncTime) {
+                const timeString = lastSyncTime.toLocaleTimeString();
+                syncDetailsElement.textContent = `Last sync: ${timeString}`;
+            } else {
+                syncDetailsElement.textContent = 'No cloud sync available';
+            }
+        }
+        
+        // Load dashboard data from Tencent Cloud (with local fallback)
+        async function loadDashboardData() {
             const today = new Date().toISOString().split('T')[0];
             
-            // Total views - getting from Tencent Cloud (simulated)
-            fetchTencentCloudData('total_views').then(data => {
-                const totalViews = data || '0';
+            // Use portfolio analytics for data fetching (handles cloud vs local)
+            try {
+                // Total views
+                const totalViews = await window.portfolioAnalytics.fetchTencentCloudData('total_views') || '0';
                 document.getElementById('total-views').textContent = parseInt(totalViews).toLocaleString();
                 
                 // Update unique visitors based on total views
                 const uniqueVisitors = Math.floor(parseInt(totalViews) * 0.6); // Estimate unique visitors
                 document.getElementById('unique-visitors').textContent = uniqueVisitors.toLocaleString();
-            });
-            
-            // Today's views
-            fetchTencentCloudData(`pageviews_${today}`).then(data => {
-                const todayViews = data || '0';
+                
+                // Today's views
+                const todayViews = await window.portfolioAnalytics.fetchTencentCloudData(`pageviews_${today}`) || '0';
                 document.getElementById('today-views').textContent = parseInt(todayViews).toLocaleString();
-            });
-            
-            // Weekly views
-            calculateWeeklyViews().then(weeklyViews => {
+                
+                // Weekly views
+                const weeklyViews = await calculateWeeklyViews();
                 document.getElementById('weekly-views').textContent = weeklyViews.toLocaleString();
-            });
-            
-            // Load charts and tables
-            loadViewsChart();
-            loadSectionsChart();
-            loadVisitorTable();
-            
-            // Load geographic data
-            loadGeographicData();
+                
+                // Load charts and tables
+                await loadViewsChart();
+                await loadSectionsChart();
+                await loadVisitorTable();
+                
+                // Load geographic data
+                await loadGeographicData();
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                alert('There was an error loading some dashboard data. Please refresh and try again.');
+            }
         }
         
-        // Calculate weekly views from Tencent Cloud (simulated)
+        // Calculate weekly views
         async function calculateWeeklyViews() {
             let weeklyViews = 0;
             const today = new Date();
@@ -508,7 +659,7 @@
                 date.setDate(date.getDate() - i);
                 const dateString = date.toISOString().split('T')[0];
                 
-                const views = await fetchTencentCloudData(`pageviews_${dateString}`) || '0';
+                const views = await window.portfolioAnalytics.fetchTencentCloudData(`pageviews_${dateString}`) || '0';
                 weeklyViews += parseInt(views);
             }
             
@@ -528,7 +679,7 @@
                 const dateString = date.toISOString().split('T')[0];
                 dates.push(dateString);
                 
-                const views = await fetchTencentCloudData(`pageviews_${dateString}`) || '0';
+                const views = await window.portfolioAnalytics.fetchTencentCloudData(`pageviews_${dateString}`) || '0';
                 viewsData.push(parseInt(views));
             }
             
@@ -568,8 +719,8 @@
         
         // Load sections chart
         async function loadSectionsChart() {
-            // Get section data from Tencent Cloud (simulated)
-            const sectionData = await fetchTencentCloudData('section_data') || {
+            // Get section data
+            const sectionData = await window.portfolioAnalytics.fetchTencentCloudData('section_data') || {
                 home: 0,
                 about: 0,
                 skills: 0,
@@ -624,9 +775,16 @@
         
         // Load visitor table
         async function loadVisitorTable() {
-            // Get visitor history from Tencent Cloud (simulated)
-            const visitorHistory = await fetchTencentCloudData('visitor_history') || [];
-            const sectionHistory = await fetchTencentCloudData('section_history') || [];
+            // Get visitor and section history
+            const visitorHistory = await window.portfolioAnalytics.fetchTencentCloudData('visitor_history') || [];
+            const sectionHistory = await window.portfolioAnalytics.fetchTencentCloudData('section_history') || [];
+            
+            // Get geographic data for location information
+            const geoData = await window.portfolioAnalytics.fetchTencentCloudData('geo_data') || {
+                countries: {},
+                cities: {},
+                cityCountryMap: {}
+            };
             
             // Combine histories and sort by timestamp
             const combinedHistory = [...visitorHistory, ...sectionHistory].sort((a, b) => {
@@ -656,17 +814,25 @@
                         <td>${entry.section.charAt(0).toUpperCase() + entry.section.slice(1)}</td>
                         <td>-</td>
                         <td>-</td>
+                        <td>-</td>
                     `;
                 } else if (entry.data) {
                     // Visitor history entry
                     const screenSize = `${entry.data.screenWidth} x ${entry.data.screenHeight}`;
                     const browser = getBrowserInfo(entry.data.userAgent);
                     
+                    // Try to find location info
+                    let location = 'Unknown';
+                    if (entry.data.city && entry.data.country) {
+                        location = `${entry.data.city}, ${entry.data.country}`;
+                    }
+                    
                     row.innerHTML = `
                         <td>${formattedTime}</td>
                         <td>Page View</td>
                         <td>${screenSize}</td>
                         <td>${browser}</td>
+                        <td>${location}</td>
                     `;
                 }
                 
@@ -693,10 +859,11 @@
         
         // Load geographic data
         async function loadGeographicData() {
-            // Get geographic data from Tencent Cloud (simulated)
-            const geoData = await fetchTencentCloudData('geo_data') || {
+            // Get geographic data
+            const geoData = await window.portfolioAnalytics.fetchTencentCloudData('geo_data') || {
                 countries: {},
-                cities: {}
+                cities: {},
+                cityCountryMap: {}
             };
             
             // Update summary stats
@@ -709,7 +876,7 @@
             populateCountryTable(geoData.countries);
             
             // Populate city table
-            populateCityTable(geoData.cities, geoData.cityCountryMap || {});
+            populateCityTable(geoData.cities, geoData.cityCountryMap);
             
             // Initialize search functionality
             initializeSearch();
@@ -718,12 +885,12 @@
         // Update geographic summary statistics
         function updateGeoSummaryStats(geoData) {
             // Count total countries and cities
-            const totalCountries = Object.keys(geoData.countries).length;
-            const totalCities = Object.keys(geoData.cities).length;
+            const totalCountries = Object.keys(geoData.countries || {}).length;
+            const totalCities = Object.keys(geoData.cities || {}).length;
             
             // Find top country
             let topCountry = { name: '--', views: 0 };
-            for (const [country, views] of Object.entries(geoData.countries)) {
+            for (const [country, views] of Object.entries(geoData.countries || {})) {
                 if (views > topCountry.views) {
                     topCountry = { name: country, views: views };
                 }
@@ -731,7 +898,7 @@
             
             // Find top city
             let topCity = { name: '--', views: 0 };
-            for (const [city, views] of Object.entries(geoData.cities)) {
+            for (const [city, views] of Object.entries(geoData.cities || {})) {
                 if (views > topCity.views) {
                     topCity = { name: city, views: views };
                 }
@@ -790,7 +957,7 @@
             
             // Set data for countries
             const polygonData = [];
-            for (const [countryName, views] of Object.entries(countryData)) {
+            for (const [countryName, views] of Object.entries(countryData || {})) {
                 const id = getCountryCode(countryName);
                 if (id) {
                     polygonData.push({
@@ -825,10 +992,20 @@
             tableBody.innerHTML = '';
             
             // Get total views
-            const totalViews = Object.values(countryData).reduce((sum, views) => sum + views, 0);
+            const totalViews = Object.values(countryData || {}).reduce((sum, views) => sum + views, 0);
+            
+            // If no data, display message
+            if (totalViews === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="4" class="text-center">No country data available yet</td>
+                `;
+                tableBody.appendChild(row);
+                return;
+            }
             
             // Sort countries by views (descending)
-            const sortedCountries = Object.entries(countryData)
+            const sortedCountries = Object.entries(countryData || {})
                 .sort((a, b) => b[1] - a[1])
                 .map(([country, views]) => ({ country, views }));
             
@@ -858,15 +1035,25 @@
             tableBody.innerHTML = '';
             
             // Get total views
-            const totalViews = Object.values(cityData).reduce((sum, views) => sum + views, 0);
+            const totalViews = Object.values(cityData || {}).reduce((sum, views) => sum + views, 0);
+            
+            // If no data, display message
+            if (totalViews === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="4" class="text-center">No city data available yet</td>
+                `;
+                tableBody.appendChild(row);
+                return;
+            }
             
             // Sort cities by views (descending)
-            const sortedCities = Object.entries(cityData)
+            const sortedCities = Object.entries(cityData || {})
                 .sort((a, b) => b[1] - a[1])
                 .map(([city, views]) => ({ 
                     city, 
                     views, 
-                    country: cityCountryMap[city] || 'Unknown'
+                    country: cityCountryMap?.[city] || 'Unknown'
                 }));
             
             // Create table rows
@@ -893,8 +1080,10 @@
                 const rows = document.querySelectorAll('#countries-table tr');
                 
                 rows.forEach(row => {
-                    const countryName = row.querySelector('td:first-child').textContent.toLowerCase();
-                    row.style.display = countryName.includes(searchTerm) ? '' : 'none';
+                    if (row.cells.length === 1) return; // Skip "no data" row
+                    
+                    const countryName = row.querySelector('td:first-child')?.textContent.toLowerCase();
+                    row.style.display = countryName?.includes(searchTerm) ? '' : 'none';
                 });
             });
             
@@ -905,9 +1094,11 @@
                 const rows = document.querySelectorAll('#cities-table tr');
                 
                 rows.forEach(row => {
-                    const cityName = row.querySelector('td:first-child').textContent.toLowerCase();
-                    const countryName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                    row.style.display = cityName.includes(searchTerm) || countryName.includes(searchTerm) ? '' : 'none';
+                    if (row.cells.length === 1) return; // Skip "no data" row
+                    
+                    const cityName = row.querySelector('td:first-child')?.textContent.toLowerCase();
+                    const countryName = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase();
+                    row.style.display = (cityName?.includes(searchTerm) || countryName?.includes(searchTerm)) ? '' : 'none';
                 });
             });
         }
@@ -971,282 +1162,134 @@
             return countryMap[countryName] || null;
         }
         
-        // Simulate fetching data from Tencent Cloud
-        // In production, replace with actual Tencent Cloud SDK calls
-        async function fetchTencentCloudData(key) {
-            // Simulate API delay
-            await new Promise(resolve => setTimeout(resolve, 100));
-            
-            // Mock data for demonstration
-            const mockData = {
-                total_views: 15876,
-                'pageviews_2025-04-06': 346,
-                'pageviews_2025-04-05': 412,
-                'pageviews_2025-04-04': 389,
-                'pageviews_2025-04-03': 427,
-                'pageviews_2025-04-02': 401,
-                'pageviews_2025-04-01': 375,
-                'pageviews_2025-03-31': 356,
-                section_data: {
-                    home: 5248,
-                    about: 3421,
-                    skills: 2976,
-                    projects: 4132,
-                    experience: 2874,
-                    contact: 1523
-                },
-                visitor_history: [
-                    {
-                        timestamp: '2025-04-06T14:23:45.000Z',
-                        data: {
-                            screenWidth: 1920,
-                            screenHeight: 1080,
-                            userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36'
-                        }
-                    },
-                    {
-                        timestamp: '2025-04-06T13:56:12.000Z',
-                        data: {
-                            screenWidth: 1440,
-                            screenHeight: 900,
-                            userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15'
-                        }
-                    }
-                ],
-                section_history: [
-                    {
-                        timestamp: '2025-04-06T14:25:18.000Z',
-                        section: 'projects'
-                    },
-                    {
-                        timestamp: '2025-04-06T14:02:37.000Z',
-                        section: 'skills'
-                    }
-                ],
-                geo_data: {
-                    countries: {
-                        "United States": 4256,
-                        "China": 2187,
-                        "India": 1945,
-                        "Germany": 1124,
-                        "United Kingdom": 982,
-                        "Canada": 876,
-                        "Australia": 743,
-                        "Japan": 687,
-                        "France": 634,
-                        "Brazil": 589,
-                        "South Korea": 456,
-                        "Mexico": 432,
-                        "Russia": 387,
-                        "Italy": 352,
-                        "Spain": 327,
-                        "Netherlands": 298,
-                        "Indonesia": 265,
-                        "Vietnam": 243,
-                        "Singapore": 237,
-                        "Poland": 226,
-                        "Switzerland": 198,
-                        "Sweden": 187,
-                        "Turkey": 176,
-                        "Egypt": 154,
-                        "South Africa": 142,
-                        "Thailand": 138,
-                        "Malaysia": 132,
-                        "Philippines": 127,
-                        "Belgium": 118,
-                        "Denmark": 109,
-                        "Israel": 98,
-                        "Argentina": 94,
-                        "Finland": 92,
-                        "Norway": 87,
-                        "Austria": 82,
-                        "Portugal": 76,
-                        "New Zealand": 68,
-                        "Ireland": 64,
-                        "Greece": 57,
-                        "Czech Republic": 54,
-                        "Romania": 49,
-                        "Hungary": 46,
-                        "Colombia": 42,
-                        "Ukraine": 38,
-                        "Pakistan": 36,
-                        "Chile": 33,
-                        "United Arab Emirates": 31
-                    },
-                    cities: {
-                        "Atlanta": 1245,
-                        "New York": 876,
-                        "San Francisco": 765,
-                        "Beijing": 687,
-                        "Bangalore": 643,
-                        "London": 598,
-                        "Toronto": 534,
-                        "Berlin": 487,
-                        "Sydney": 456,
-                        "Tokyo": 432,
-                        "Shanghai": 421,
-                        "Mumbai": 398,
-                        "Paris": 387,
-                        "Chicago": 354,
-                        "Seattle": 342,
-                        "Boston": 326,
-                        "Los Angeles": 312,
-                        "Austin": 298,
-                        "Singapore": 287,
-                        "Delhi": 276,
-                        "Hong Kong": 265,
-                        "Melbourne": 254,
-                        "Vancouver": 243,
-                        "Amsterdam": 232,
-                        "Munich": 221,
-                        "Seoul": 212,
-                        "Dallas": 198,
-                        "Miami": 187,
-                        "Houston": 176,
-                        "Madrid": 165,
-                        "Barcelona": 154,
-                        "Rome": 143,
-                        "Milan": 132,
-                        "Montreal": 129,
-                        "São Paulo": 126,
-                        "Mexico City": 122,
-                        "Stockholm": 118,
-                        "Dubai": 112,
-                        "Brussels": 104,
-                        "Vienna": 98,
-                        "Dublin": 94,
-                        "Helsinki": 89,
-                        "Oslo": 87,
-                        "Warsaw": 83,
-                        "Budapest": 76,
-                        "Prague": 72,
-                        "Zurich": 68,
-                        "Copenhagen": 65,
-                        "Bangkok": 62,
-                        "Manila": 58,
-                        "Jakarta": 54,
-                        "Kuala Lumpur": 52,
-                        "Cape Town": 48,
-                        "Cairo": 45,
-                        "Tel Aviv": 43,
-                        "Lisbon": 41,
-                        "Athens": 38,
-                        "Bucharest": 35,
-                        "Kiev": 32,
-                        "Johannesburg": 29
-                    },
-                    cityCountryMap: {
-                        "Atlanta": "United States",
-                        "New York": "United States",
-                        "San Francisco": "United States",
-                        "Beijing": "China",
-                        "Bangalore": "India",
-                        "London": "United Kingdom",
-                        "Toronto": "Canada",
-                        "Berlin": "Germany",
-                        "Sydney": "Australia",
-                        "Tokyo": "Japan",
-                        "Shanghai": "China",
-                        "Mumbai": "India",
-                        "Paris": "France",
-                        "Chicago": "United States",
-                        "Seattle": "United States",
-                        "Boston": "United States",
-                        "Los Angeles": "United States",
-                        "Austin": "United States",
-                        "Singapore": "Singapore",
-                        "Delhi": "India",
-                        "Hong Kong": "China",
-                        "Melbourne": "Australia",
-                        "Vancouver": "Canada",
-                        "Amsterdam": "Netherlands",
-                        "Munich": "Germany",
-                        "Seoul": "South Korea",
-                        "Dallas": "United States",
-                        "Miami": "United States",
-                        "Houston": "United States",
-                        "Madrid": "Spain",
-                        "Barcelona": "Spain",
-                        "Rome": "Italy",
-                        "Milan": "Italy",
-                        "Montreal": "Canada",
-                        "São Paulo": "Brazil",
-                        "Mexico City": "Mexico",
-                        "Stockholm": "Sweden",
-                        "Dubai": "United Arab Emirates",
-                        "Brussels": "Belgium",
-                        "Vienna": "Austria",
-                        "Dublin": "Ireland",
-                        "Helsinki": "Finland",
-                        "Oslo": "Norway",
-                        "Warsaw": "Poland",
-                        "Budapest": "Hungary",
-                        "Prague": "Czech Republic",
-                        "Zurich": "Switzerland",
-                        "Copenhagen": "Denmark",
-                        "Bangkok": "Thailand",
-                        "Manila": "Philippines",
-                        "Jakarta": "Indonesia",
-                        "Kuala Lumpur": "Malaysia",
-                        "Cape Town": "South Africa",
-                        "Cairo": "Egypt",
-                        "Tel Aviv": "Israel",
-                        "Lisbon": "Portugal",
-                        "Athens": "Greece",
-                        "Bucharest": "Romania",
-                        "Kiev": "Ukraine",
-                        "Johannesburg": "South Africa"
-                    }
+        // Setup data management buttons
+        function setupDataManagementButtons() {
+            // Force sync button
+            document.getElementById('force-sync-btn').addEventListener('click', async function() {
+                if (!cloudConnected) {
+                    alert('Cannot sync to cloud - connection not available.');
+                    return;
                 }
-            };
-            
-            return mockData[key] || null;
-        }
-        
-        async function initTencentCloudSDK() {
-            // Import Tencent Cloud SDK
-            const COS = require('cos-nodejs-sdk-v5');
-            
-            // Initialize with your credentials
-            const cos = new COS({
-                SecretId: 'IKIDureIj0OZXKxTvIUVOFza3JPNBrMfnncE',
-                SecretKey: 'WpyveBZklcKuLZhnkDZyDJqIgswxpV4U'
+                
+                try {
+                    // Show syncing status
+                    updateCloudStatus('syncing', 'Syncing data to Tencent Cloud...');
+                    
+                    // Perform sync
+                    await window.portfolioAnalytics.syncDataToTencentCloud();
+                    
+                    // Update status
+                    lastSyncTime = new Date();
+                    updateCloudStatus('connected', 'Connected to Tencent Cloud');
+                    
+                    alert('Data successfully synced to Tencent Cloud!');
+                } catch (error) {
+                    console.error('Error syncing data:', error);
+                    updateCloudStatus('offline', 'Sync failed - check console for details');
+                    alert('Failed to sync data. See console for details.');
+                }
             });
             
-            return cos;
+            // Export data button
+            document.getElementById('export-data-btn').addEventListener('click', async function() {
+                try {
+                    // Collect all analytics data
+                    const exportData = {
+                        total_views: await window.portfolioAnalytics.fetchTencentCloudData('total_views'),
+                        visitor_history: await window.portfolioAnalytics.fetchTencentCloudData('visitor_history'),
+                        section_history: await window.portfolioAnalytics.fetchTencentCloudData('section_history'),
+                        section_data: await window.portfolioAnalytics.fetchTencentCloudData('section_data'),
+                        geo_data: await window.portfolioAnalytics.fetchTencentCloudData('geo_data'),
+                        export_date: new Date().toISOString(),
+                        source: cloudConnected ? 'Tencent Cloud' : 'Local Storage'
+                    };
+                    
+                    // Create blob and download link
+                    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    // Create download link
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `portfolio-analytics-export-${new Date().toISOString().split('T')[0]}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                } catch (error) {
+                    console.error('Error exporting data:', error);
+                    alert('Failed to export data. See console for details.');
+                }
+            });
+            
+            // Import data button
+            document.getElementById('import-data-btn').addEventListener('click', function() {
+                document.getElementById('import-file').click();
+            });
+            
+            // Handle file selection for import
+            document.getElementById('import-file').addEventListener('change', async function(e) {
+                if (!this.files || !this.files[0]) return;
+                
+                try {
+                    const file = this.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = async function(event) {
+                        try {
+                            // Parse imported data
+                            const importData = JSON.parse(event.target.result);
+                            
+                            // Confirm import
+                            if (!confirm(`Are you sure you want to import this data?\nThis will overwrite existing data.\n\nExport date: ${new Date(importData.export_date).toLocaleString()}\nSource: ${importData.source}`)) {
+                                return;
+                            }
+                            
+                            // Show syncing status
+                            updateCloudStatus('syncing', 'Importing data...');
+                            
+                            // Import each data category
+                            for (const [key, value] of Object.entries(importData)) {
+                                // Skip metadata fields
+                                if (['export_date', 'source'].includes(key)) continue;
+                                
+                                // Store in localStorage
+                                localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+                                
+                                // Mark for cloud sync
+                                window.portfolioAnalytics.markForSync(key);
+                            }
+                            
+                            // Sync to cloud if connected
+                            if (cloudConnected) {
+                                await window.portfolioAnalytics.syncDataToTencentCloud();
+                                lastSyncTime = new Date();
+                                updateCloudStatus('connected', 'Connected to Tencent Cloud');
+                            } else {
+                                updateCloudStatus('offline', 'Data imported to local storage only');
+                            }
+                            
+                            // Reload dashboard
+                            alert('Data imported successfully! The dashboard will now reload.');
+                            loadDashboardData();
+                        } catch (error) {
+                            console.error('Error processing import file:', error);
+                            alert('Failed to import data. The file may be invalid or corrupted.');
+                            updateCloudStatus(cloudConnected ? 'connected' : 'offline', 
+                                cloudConnected ? 'Connected to Tencent Cloud' : 'Using local storage');
+                        }
+                    };
+                    
+                    reader.readAsText(file);
+                } catch (error) {
+                    console.error('Error reading import file:', error);
+                    alert('Failed to read import file.');
+                }
+                
+                // Reset file input
+                this.value = '';
+            });
         }
-        
-        async function fetchDataFromTencentCloud(key) {
-            try {
-                const cos = await initTencentCloudSDK();
-                
-                const result = await cos.getObject({
-                    Bucket: 'website-traffic-1352137578',
-                    Region: 'ap-bangkok',
-                    Key: `analytics/${key}.json`
-                });
-                
-                return JSON.parse(result.Body.toString());
-            } catch (error) {
-                console.error('Error fetching data from Tencent Cloud:', error);
-                return null;
-            }
-        }
-        
-        async function saveDataToTencentCloud(key, data) {
-            try {
-                const cos = await initTencentCloudSDK();
-                
-                await cos.putObject({
-                    Bucket: 'website-traffic-1352137578',
-                    Region: 'ap-bangkok',
-                    Key: `analytics/${key}.json`,
-                    Body: JSON.stringify(data)
-                });
-                
-                return true;
-            } catch (error) {
-                console.error('Error saving data to Tencent Cloud:', error);
-                return false;
-            }
-        }
+    </script>
+</body>
+</html>
