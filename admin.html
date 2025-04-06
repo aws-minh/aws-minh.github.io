@@ -3,525 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Admin Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Admin Dashboard | Minh Duc Nguyen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="../assets/css/admin.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        :root {
-            --primary: #007AFF;
-            --secondary: #5AC8FA;
-            --dark: #121212;
-            --light: #F5F5F7;
-            --gray: #86868b;
-            --success: #34C759;
-            --warning: #FF9500;
-            --danger: #FF3B30;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-            letter-spacing: -0.015em;
-            padding-top: 70px;
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 600;
-            letter-spacing: -0.03em;
-        }
-        
-        .card {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-        
-        .card-body {
-            padding: 1.5rem;
-        }
-        
-        .card .card-title {
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            font-size: 1.25rem;
-        }
-        
-        .stat-card {
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        .navbar {
-            background-color: rgba(245, 245, 247, 0.8) !important;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 15px 0;
-        }
-        
-        .navbar-brand {
-            font-weight: 600;
-            letter-spacing: -0.02em;
-        }
-        
-        .chart-container {
-            position: relative;
-            height: 300px;
-            width: 100%;
-        }
-        
-        .table {
-            font-size: 0.9rem;
-        }
-        
-        .table th {
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-            color: var(--gray);
-            border-top: none;
-        }
-        
-        .table td {
-            vertical-align: middle;
-        }
-        
-        .login-container {
-            max-width: 400px;
-            margin: 100px auto;
-        }
-        
-        #admin-content {
-            display: none;
-        }
-
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            height: 800px;
-            overflow: hidden;
-        }
-
-        .iframe-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Minh Duc Nguyen</a>
-            <span class="ms-auto">Admin Dashboard</span>
-        </div>
-    </nav>
-    
-    <div class="container">
-        <!-- Login Form -->
-        <div id="login-form" class="login-container card">
-            <div class="card-body">
-                <h2 class="card-title text-center mb-4">Admin Login</h2>
-                <form id="admin-login-form">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Login</button>
-                </form>
-                <p id="login-error" class="text-danger mt-3 text-center" style="display: none;">Invalid credentials. Please try again.</p>
-            </div>
-        </div>
-        
-        <!-- Admin Dashboard Content -->
-        <div id="admin-content">
-            <div class="row mt-4">
-                <div class="col-lg-3">
-                    <div class="card stat-card">
-                        <div class="card-body">
-                            <div class="stat-value" id="total-views">--</div>
-                            <div class="stat-label">Total Views</div>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Login Section -->
+            <div id="login-section" class="col-12 text-center">
+                <div class="login-container">
+                    <h2 class="mb-4">Admin Login</h2>
+                    <form id="admin-login-form">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" required>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="card stat-card">
-                        <div class="card-body">
-                            <div class="stat-value" id="today-views">--</div>
-                            <div class="stat-label">Today's Views</div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" required>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="card stat-card">
-                        <div class="card-body">
-                            <div class="stat-value" id="weekly-views">--</div>
-                            <div class="stat-label">Weekly Views</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="card stat-card">
-                        <div class="card-body">
-                            <div class="stat-value" id="unique-visitors">--</div>
-                            <div class="stat-label">Unique Visitors</div>
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                    <p id="login-error" class="text-danger mt-3" style="display:none;">
+                        Invalid credentials. Please try again.
+                    </p>
                 </div>
             </div>
-            
-            <div class="row mt-4">
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title">Daily Views</h2>
-                            <div class="chart-container">
-                                <canvas id="viewsChart"></canvas>
-                            </div>
+
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="col-12" style="display:none;">
+                <div class="row">
+                    <!-- Sidebar -->
+                    <div class="col-md-2 bg-light sidebar">
+                        <div class="position-sticky">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#analytics">
+                                        <i class="fas fa-chart-line"></i> Analytics
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#visitors">
+                                        <i class="fas fa-users"></i> Visitors
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#export">
+                                        <i class="fas fa-download"></i> Export Data
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" id="logout-btn">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title">Section Popularity</h2>
-                            <div class="chart-container">
-                                <canvas id="sectionsChart"></canvas>
+
+                    <!-- Main Content -->
+                    <main class="col-md-10 ms-sm-auto px-4">
+                        <!-- Analytics Overview -->
+                        <section id="analytics" class="mb-4">
+                            <h2 class="my-4">Dashboard Overview</h2>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Total Views</h5>
+                                            <p class="display-4" id="total-views">0</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Unique Visitors</h5>
+                                            <p class="display-4" id="unique-visitors">0</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Today's Views</h5>
+                                            <p class="display-4" id="today-views">0</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Active Pages</h5>
+                                            <p class="display-4" id="active-pages">0</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title">Recent Visitor Activity</h2>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Date & Time</th>
-                                            <th>Section</th>
-                                            <th>Screen Size</th>
-                                            <th>Browser</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="visitor-table">
-                                        <!-- Table rows will be inserted here -->
-                                    </tbody>
-                                </table>
+                        </section>
+
+                        <!-- Charts -->
+                        <section id="charts" class="mb-4">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Daily Traffic</h5>
+                                            <canvas id="traffic-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Page Views Distribution</h5>
+                                            <canvas id="page-views-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- GoatCounter Embed (If using) -->
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title">External Analytics Dashboard</h2>
-                            <div class="iframe-container">
-                                <!-- Replace with your GoatCounter dashboard URL -->
-                                <iframe src="https://minhducnguyen.goatcounter.com/dashboard" allowfullscreen></iframe>
+                        </section>
+
+                        <!-- Visitor Log -->
+                        <section id="visitors" class="mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Recent Visitors</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="visitor-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Timestamp</th>
+                                                    <th>Page</th>
+                                                    <th>Browser</th>
+                                                    <th>Screen Size</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="visitor-table-body">
+                                                <!-- Visitor logs will be dynamically populated -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </section>
+
+                        <!-- Data Export -->
+                        <section id="export" class="mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Export Analytics</h5>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button id="export-json-btn" class="btn btn-primary w-100">
+                                                <i class="fas fa-file-export"></i> Export as JSON
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button id="export-csv-btn" class="btn btn-secondary w-100">
+                                                <i class="fas fa-file-csv"></i> Export as CSV
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
                 </div>
             </div>
         </div>
     </div>
-    
-    <script>
-        // Simple admin login
-        document.getElementById('admin-login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            // Simple authentication (hash for better security in production)
-            if (username === 'teemo' && password === 'Quynh290497*') {
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('admin-content').style.display = 'block';
-                
-                // Store login state in sessionStorage
-                sessionStorage.setItem('admin-logged-in', 'true');
-                
-                // Load dashboard data
-                loadDashboardData();
-            } else {
-                document.getElementById('login-error').style.display = 'block';
-            }
-        });
-        
-        // Check if already logged in
-        document.addEventListener('DOMContentLoaded', function() {
-            if (sessionStorage.getItem('admin-logged-in') === 'true') {
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('admin-content').style.display = 'block';
-                loadDashboardData();
-            }
-        });
-        
-        // Load dashboard data from localStorage
-        function loadDashboardData() {
-            const today = new Date().toISOString().split('T')[0];
-            
-            // Total views
-            const totalViews = localStorage.getItem('total_views') || '0';
-            document.getElementById('total-views').textContent = parseInt(totalViews).toLocaleString();
-            
-            // Today's views
-            const todayViews = localStorage.getItem(`pageviews_${today}`) || '0';
-            document.getElementById('today-views').textContent = parseInt(todayViews).toLocaleString();
-            
-            // Weekly views
-            const weeklyViews = calculateWeeklyViews();
-            document.getElementById('weekly-views').textContent = weeklyViews.toLocaleString();
-            
-            // Unique visitors (estimate based on session storage)
-            const uniqueVisitors = Math.floor(parseInt(totalViews) * 0.6); // Estimate unique visitors
-            document.getElementById('unique-visitors').textContent = uniqueVisitors.toLocaleString();
-            
-            // Load charts
-            loadViewsChart();
-            loadSectionsChart();
-            loadVisitorTable();
-        }
-        
-        // Calculate weekly views
-        function calculateWeeklyViews() {
-            let weeklyViews = 0;
-            const today = new Date();
-            
-            // Loop through the last 7 days
-            for (let i = 0; i < 7; i++) {
-                const date = new Date(today);
-                date.setDate(date.getDate() - i);
-                const dateString = date.toISOString().split('T')[0];
-                const views = localStorage.getItem(`pageviews_${dateString}`) || '0';
-                weeklyViews += parseInt(views);
-            }
-            
-            return weeklyViews;
-        }
-        
-        // Load views chart
-        function loadViewsChart() {
-            const dates = [];
-            const viewsData = [];
-            
-            // Get data for the last 14 days
-            const today = new Date();
-            for (let i = 13; i >= 0; i--) {
-                const date = new Date(today);
-                date.setDate(date.getDate() - i);
-                const dateString = date.toISOString().split('T')[0];
-                dates.push(dateString);
-                
-                const views = localStorage.getItem(`pageviews_${dateString}`) || '0';
-                viewsData.push(parseInt(views));
-            }
-            
-            // Create chart
-            const ctx = document.getElementById('viewsChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: dates.map(date => {
-                        const d = new Date(date);
-                        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                    }),
-                    datasets: [{
-                        label: 'Page Views',
-                        data: viewsData,
-                        backgroundColor: 'rgba(0, 122, 255, 0.1)',
-                        borderColor: 'rgba(0, 122, 255, 1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                precision: 0
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
-        // Load sections chart
-        function loadSectionsChart() {
-            const sectionCounts = {
-                home: 0,
-                about: 0,
-                skills: 0,
-                projects: 0,
-                experience: 0,
-                contact: 0
-            };
-            
-            // Calculate section views
-            for (let key in localStorage) {
-                if (key.startsWith('section_')) {
-                    const section = key.split('_')[1];
-                    if (sectionCounts.hasOwnProperty(section)) {
-                        sectionCounts[section] += parseInt(localStorage.getItem(key) || '0');
-                    }
-                }
-            }
-            
-            // Prepare data for chart
-            const labels = Object.keys(sectionCounts).map(section => 
-                section.charAt(0).toUpperCase() + section.slice(1)
-            );
-            const data = Object.values(sectionCounts);
-            const backgroundColors = [
-                'rgba(52, 199, 89, 0.7)',    // Green
-                'rgba(0, 122, 255, 0.7)',    // Blue
-                'rgba(255, 149, 0, 0.7)',    // Orange
-                'rgba(175, 82, 222, 0.7)',   // Purple
-                'rgba(255, 45, 85, 0.7)',    // Red
-                'rgba(90, 200, 250, 0.7)'    // Light Blue
-            ];
-            
-            // Create chart
-            const ctx = document.getElementById('sectionsChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: data,
-                        backgroundColor: backgroundColors,
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'right',
-                            labels: {
-                                boxWidth: 15,
-                                font: {
-                                    size: 11
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
-        // Load visitor table
-        function loadVisitorTable() {
-            const visitorHistory = JSON.parse(localStorage.getItem('visitor_history') || '[]');
-            const sectionHistory = JSON.parse(localStorage.getItem('section_history') || '[]');
-            
-            // Combine histories and sort by timestamp
-            const combinedHistory = [...visitorHistory, ...sectionHistory].sort((a, b) => {
-                return new Date(b.timestamp) - new Date(a.timestamp);
-            }).slice(0, 10); // Get only the latest 10 entries
-            
-            const tableBody = document.getElementById('visitor-table');
-            tableBody.innerHTML = '';
-            
-            combinedHistory.forEach(entry => {
-                const row = document.createElement('tr');
-                
-                // Format timestamp
-                const timestamp = new Date(entry.timestamp);
-                const formattedTime = timestamp.toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                
-                // Create row content based on entry type
-                if (entry.section) {
-                    // Section history entry
-                    row.innerHTML = `
-                        <td>${formattedTime}</td>
-                        <td>${entry.section.charAt(0).toUpperCase() + entry.section.slice(1)}</td>
-                        <td>-</td>
-                        <td>-</td>
-                    `;
-                } else if (entry.data) {
-                    // Visitor history entry
-                    const screenSize = `${entry.data.screenWidth} x ${entry.data.screenHeight}`;
-                    const browser = getBrowserInfo(entry.data.userAgent);
-                    
-                    row.innerHTML = `
-                        <td>${formattedTime}</td>
-                        <td>Page View</td>
-                        <td>${screenSize}</td>
-                        <td>${browser}</td>
-                    `;
-                }
-                
-                tableBody.appendChild(row);
-            });
-        }
-        
-        // Get browser info from user agent
-        function getBrowserInfo(userAgent) {
-            if (userAgent.includes('Firefox')) {
-                return 'Firefox';
-            } else if (userAgent.includes('Chrome') && !userAgent.includes('Edg')) {
-                return 'Chrome';
-            } else if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) {
-                return 'Safari';
-            } else if (userAgent.includes('Edg')) {
-                return 'Edge';
-            } else if (userAgent.includes('MSIE') || userAgent.includes('Trident/')) {
-                return 'Internet Explorer';
-            } else {
-                return 'Unknown';
-            }
-        }
-    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/admin-dashboard.js"></script>
 </body>
 </html>

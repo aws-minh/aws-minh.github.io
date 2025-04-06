@@ -1,0 +1,62 @@
+name: Portfolio Website Deployment
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install qcloud-cos-python-sdk
+    
+    - name: Prepare analytics data
+      run: |
+        # Create mock analytics data for deployment
+        mkdir -p data
+        echo '{
+          "total_views": "1000",
+          "visitor_history": [],
+          "section_views": {}
+        }' > data/analytics.json
+    
+    - name: Export Analytics to Tencent Cloud Storage
+      env:
+        TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+        TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+        TENCENT_REGION: ap-shanghai
+        TENCENT_BUCKET: portfolio-analytics
+      run: |
+        python scripts/tencent_cos_export.py
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .
+        publish_branch: gh-pages
+    
+    - name: Send Deployment Notification
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        message: |
+          ✅ Deployment Successful
+          Repository: ${{ github.repository }}
+          Commit: ${{ github.sha }}
+          Author: ${{ github.actor }}
