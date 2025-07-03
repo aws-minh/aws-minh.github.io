@@ -512,48 +512,9 @@
                     <button type="button" class="btn btn-outline-primary" data-filter="web-dev">Web Dev & Full Stack</button>
                     <button type="button" class="btn btn-outline-primary" data-filter="ai-ds">AI & Data Science</button>
                     <button type="button" class="btn btn-outline-primary" data-filter="analytics-bi">Analytics & BI</button>
-                    <button type="button" class="btn btn-outline-primary" data-filter="devops">DevOps & Infrastructure</button>
                 </div>
                 
                 <div class="row" id="project-list">
-                    <div class="col-lg-6 mb-5 project-card fade-in" data-category="devops web-dev analytics-bi">
-                        <div class="card h-100">
-                            <div class="card-body d-flex flex-column">
-                                <div class="project-header">
-                                    <h3 class="project-title h3">Live Iran War Tracker</h3>
-                                    <a href="#" target="_blank" class="project-link btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-external-link-alt me-1"></i> Demo
-                                    </a>
-                                </div>
-                                <p class="project-description">
-                                    A real-time conflict monitoring platform that tracks and visualizes Iran conflict events, news, and statistics through an interactive React frontend with Leaflet maps, charts, and real-time data feeds, powered by a sophisticated Kubernetes-orchestrated backend architecture.
-                                </p>
-                                <div class="mb-3">
-                                    <strong>Key Features & Achievements:</strong>
-                                    <ul class="feature-list">
-                                        <li><strong>Real-time Conflict Monitoring Platform:</strong> Developed a full-stack web application that tracks and visualizes Iran conflict events, news, and statistics through an interactive React frontend with Leaflet maps, charts, and real-time data feeds, powered by a Flask backend with SQLite database and automated data fetching from multiple sources</li>
-                                        <li><strong>Advanced Kubernetes & Container Orchestration:</strong> Deployed using a sophisticated 3-container architecture on Kubernetes with nginx reverse proxy for intelligent traffic routing (frontend/API separation), Cloudflare tunnel integration for secure external access, persistent volume management for data storage, and automated deployment scripts with Docker image building and pushing capabilities</li>
-                                        <li><strong>Production-Grade DevOps & Infrastructure:</strong> Implements enterprise-level practices including containerized microservices, infrastructure-as-code with Kubernetes manifests, CI/CD automation, load balancing, SSL termination, monitoring and logging, cross-origin resource handling, and comprehensive error handling with health checks and connectivity testing</li>
-                                    </ul>
-                                </div>
-                                <div class="project-tags mt-auto">
-                                    <span class="tag">React</span>
-                                    <span class="tag">Flask</span>
-                                    <span class="tag">Docker</span>
-                                    <span class="tag">Kubernetes</span>
-                                    <span class="tag">Nginx</span>
-                                    <span class="tag">Cloudflare</span>
-                                    <span class="tag">SQLite</span>
-                                    <span class="tag">Leaflet</span>
-                                    <span class="tag">Recharts</span>
-                                    <span class="tag">Minikube</span>
-                                    <span class="tag">DevOps</span>
-                                    <span class="tag">CI/CD</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="col-lg-6 mb-5 project-card fade-in" data-category="ai-ds">
                         <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -686,3 +647,623 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="col-lg-6 mb-5 project-card fade-in delay-3" data-category="web-dev">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <div class="project-header">
+                                    <h3 class="project-title h3">eCommerce Platform</h3>
+                                    <a href="https://ecommerce-dashboard-nguyenducminh.replit.app/" target="_blank" class="project-link btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-external-link-alt me-1"></i> Visit
+                                    </a>
+                                </div>
+                                <p class="project-description">
+                                    A full-featured e-commerce web application built from the ground up, replicating core functionalities 
+                                    of an online marketplace including product Browse, search, user authentication, shopping cart, and order management.
+                                </p>
+                                <div class="mb-3">
+                                    <strong>Key Features:</strong>
+                                    <ul class="feature-list">
+                                        <li>Developed a full-stack e-commerce platform using Flask and SQLAlchemy,
+                                            implementing secure user authentication, real-time analytics dashboard,
+                                            and RESTful API endpoints for seamless product management and order processing</li>
+                                        <li>Architected a real-time analytics system using Kafka streams to track user behavior,
+                                            page views, and purchase patterns, providing live visualization of sales data and
+                                            user engagement metrics across global markets</li>
+                                        <li>Engineered an admin dashboard with comprehensive analytics features including interactive sales charts,
+                                            user behavior tracking, and inventory management, while implementing secure payment processing and order fulfillment workflows</li>
+                                    </ul>
+                                </div>
+                                <div class="project-tags mt-auto">
+                                    <span class="tag">Flask</span>
+                                    <span class="tag">Python</span>
+                                    <span class="tag">Docker</span>
+                                    <span class="tag">Kafka</span>
+                                    <span class="tag">Streaming</span>
+                                    <span class="tag">Kubernetes</span>
+                                    <span class="tag">eCommerce</span>
+                                    <span class="tag">Microservices</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 mb-5 project-card fade-in delay-2" data-category="analytics-bi">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <div class="project-header">
+                                    <h3 class="project-title h3">COVID-19 Analytics Dashboard</h3>
+                                    <a href="https://covid19-dashboard.replit.app/" target="_blank" class="project-link btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-external-link-alt me-1"></i> Visit
+                                    </a>
+                                </div>
+                                <p class="project-description">
+                                    A full-stack analytics platform using Python, Streamlit, and Plotly for tracking global pandemic metrics,
+                                    featuring interactive maps, statistical analysis, and machine learning forecasting across 200+ countries.
+                                </p>
+                                <div class="mb-3">
+                                    <strong>Key Features:</strong>
+                                    <ul class="feature-list">
+                                        <li>Developed a full-stack COVID-19 analytics dashboard with real-time data visualization and interactive maps</li>
+                                        <li>Implemented machine learning models for case forecasting and vaccination progress prediction with R² scores above 0.90</li>
+                                        <li>Engineered a robust data pipeline with automated hourly updates using REST APIs and efficient caching mechanisms</li>
+                                        <li>Optimized performance to maintain sub-second response times while handling millions of data points</li>
+                                    </ul>
+                                </div>
+                                <div class="project-tags mt-auto">
+                                    <span class="tag">Python</span>
+                                    <span class="tag">Streamlit</span>
+                                    <span class="tag">Plotly</span>
+                                    <span class="tag">Machine Learning</span>
+                                    <span class="tag">Data Pipeline</span>
+                                    <span class="tag">API Integration</span>
+                                    <span class="tag">Real-time Analytics</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 mb-5 project-card fade-in delay-2" data-category="analytics-bi">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <div class="project-header">
+                                    <h3 class="project-title h3">Vietnamese Stock Market Dashboard</h3>
+                                    <a href="https://minhducnguyen.org/vietstock" target="_blank" class="project-link btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-external-link-alt me-1"></i> Visit
+                                    </a>
+                                </div>
+                                <p class="project-description">
+                                    A full-stack real-time Vietnamese stock market dashboard featuring live market data visualization, 
+                                    bilingual support, and interactive TradingView-style charting for over 30 major Vietnamese stocks.
+                                </p>
+                                <div class="mb-3">
+                                    <strong>Key Features:</strong>
+                                    <ul class="feature-list">
+                                        <li>Developed a React/TypeScript frontend with interactive TradingView-style charting</li>
+                                        <li>Implemented bilingual support (English/Vietnamese) for international users</li>
+                                        <li>Built an advanced XGBoost machine learning pipeline for stock price predictions</li>
+                                        <li>Integrated technical indicators and market sentiment analysis for multi-horizon forecasting (30/60/90 days)</li>
+                                        <li>Created a high-performance ETL system for real-time market data synchronization</li>
+                                        <li>Engineered automated news aggregation from multiple Vietnamese financial sources</li>
+                                        <li>Implemented WebSocket-based live updates for market indices, stock prices, and trading volumes</li>
+                                    </ul>
+                                </div>
+                                <div class="project-tags mt-auto">
+                                    <span class="tag">React</span>
+                                    <span class="tag">PostgreSQL</span>
+                                    <span class="tag">XGBoost</span>
+                                    <span class="tag">TailwindCSS</span>
+                                    <span class="tag">Machine Learning</span>
+                                    <span class="tag">ETL</span>
+                                    <span class="tag">React Query</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 mb-5 project-card fade-in delay-2" data-category="analytics-bi">
+                         <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <div class="project-header">
+                                    <h3 class="project-title h3">HR Analytics Dashboard</h3>
+                                    <a href="https://relieved-barely-camel.ngrok-free.app/employee-data" target="_blank" class="project-link btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-external-link-alt me-1"></i> Visit
+                                    </a>
+                                </div>
+                                <p class="project-description">
+                                    A comprehensive, interactive analytics dashboard for HR departments, built from scratch using modern web technologies to enable data-driven decision-making across multiple HR functions.
+                                </p>
+                                <div class="mb-3">
+                                    <strong>Key Features:</strong>
+                                    <ul class="feature-list">
+                                        <li>Engineered a feature-rich dashboard with specialized modules for Recruitment, Performance, Compensation, Employee Demographics, and Training</li>
+                                        <li>Implemented client-side routing using react-router-dom for seamless navigation between various dashboards</li>
+                                        <li>Developed reusable UI components for KPIs and charts, ensuring a modular and maintainable codebase</li>
+                                        <li>Containerized the application using Docker and authored Kubernetes deployment manifests</li>
+                                        <li>Integrated ngrok for exposing development instances, demonstrating proficiency in modern deployment practices</li>
+                                    </ul>
+                                </div>
+                                <div class="project-tags mt-auto">
+                                    <span class="tag">React</span>
+                                    <span class="tag">Vite</span>
+                                    <span class="tag">Chart.js</span>
+                                    <span class="tag">Docker</span>
+                                    <span class="tag">Kubernetes</span>
+                                    <span class="tag">Data Visualization</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-5 project-card fade-in delay-2" data-category="analytics-bi web-development full-stack">
+                         <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <div class="project-header">
+                                    <h3 class="project-title h3">Predictive Sales Dashboard</h3>
+                                    <a href="http://reasonably-fast-labrador.ngrok-free.app/" target="_blank" class="project-link btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-external-link-alt me-1"></i> Visit
+                                    </a>
+                                </div>
+                                <p class="project-description">
+                                    A full-stack web application delivering a comprehensive sales analytics dashboard with historical data visualization and ARIMA-based predictive forecasting for sales and profit.
+                                </p>
+                                <div class="mb-3">
+                                    <strong>Key Features & Achievements:</strong>
+                                    <ul class="feature-list">
+                                        <li>Developed a full-stack sales analytics platform, integrating a Python/FastAPI backend with a React/Vite frontend to provide actionable sales insights and predictive forecasts.</li>
+                                        <li>Designed and implemented interactive dashboards using React and Recharts, visualizing key performance indicators, sales trends, and ARIMA model-based predictions for overall monthly sales and monthly profit by category.</li>
+                                        <li>Engineered robust backend services using FastAPI and SQLAlchemy for efficient data processing from CSV source into an SQLite database, and serving data via RESTful APIs for dynamic frontend consumption.</li>
+                                    </ul>
+                                </div>
+                                <div class="project-tags mt-auto">
+                                    <span class="tag">React</span>
+                                    <span class="tag">FastAPI</span>
+                                    <span class="tag">Python</span>
+                                    <span class="tag">SQLAlchemy</span>
+                                    <span class="tag">Pandas</span>
+                                    <span class="tag">ARIMA</span>
+                                    <span class="tag">Recharts</span>
+                                    <span class="tag">Docker</span>
+                                    <span class="tag">Kubernetes</span>
+                                    <span class="tag">Data Visualization</span>
+                                    <span class="tag">Predictive Analytics</span>
+                                    <span class="tag">Full-Stack</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 mb-5 project-card fade-in" data-category="analytics-bi web-dev">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <div class="project-header">
+                                    <h3 class="project-title h3">US - Global Tariff Analytics</h3>
+                                    <a href="https://phoenix-vast-moray.ngrok-free.app" target="_blank" class="project-link btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-external-link-alt me-1"></i> Visit
+                                    </a>
+                                </div>
+                                <p class="project-description">
+                                    A full-stack web application that visualizes and analyzes international trade tariff data through interactive maps and charts. This platform combines Python/Flask backend for data processing with a React frontend, enhanced by Generative AI integration for advanced data insights and predictions.
+                                </p>
+                                <div class="mb-3">
+                                    <strong>Key Features:</strong>
+                                    <ul class="feature-list">
+                                        <li>Engineered a full-stack web application using Python (Flask), React, and Chart.js to display and analyze global tariff data, integrating with a generative AI API for enhanced data insights and predictions</li>
+                                        <li>Implemented dynamic data visualizations, including interactive choropleth maps and historical data timelines, to provide users with intuitive insights into complex trade tariff information</li>
+                                        <li>Designed and deployed the application using Docker and Kubernetes, including managing persistent data storage (SQLite via PVC) and ensuring scalable, reliable access to tariff analytics</li>
+                                    </ul>
+                                </div>
+                                <div class="project-tags mt-auto">
+                                    <span class="tag">Python</span>
+                                    <span class="tag">Flask</span>
+                                    <span class="tag">React</span>
+                                    <span class="tag">Chart.js</span>
+                                    <span class="tag">Docker</span>
+                                    <span class="tag">Kubernetes</span>
+                                    <span class="tag">Generative AI</span>
+                                    <span class="tag">Data Visualization</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> </div>
+        </section>
+
+        <section id="experience" class="py-5 bg-white">
+            <div class="container px-4 px-lg-5">
+                <h2 class="section-title">Work Experience</h2>
+                
+                <div class="timeline">
+                    <div class="card mb-4 fade-in">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="h4 mb-0">BI Analyst</h3>
+                                <span class="badge bg-primary">Feb 2023 - May 2024</span>
+                            </div>
+                            <p class="text-muted mb-3">Koki Holdings America</p>
+                            <ul>
+                                <li>Oversaw report requests and managed SSRS Reporting Site</li>
+                                <li>Built data warehouse solutions using SSMS and Spark</li>
+                                <li>Worked with BI tools like Power BI, paginated reports, and SSRS Report Builder</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4 fade-in delay-1">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="h4 mb-0">Data Engineer</h3>
+                                <span class="badge bg-primary">Feb 2022 - May 2022</span>
+                            </div>
+                            <p class="text-muted mb-3">Talent Path</p>
+                            <ul>
+                                <li>Designed ETL Pipeline within AWS ecosystem with Snowflake Warehouse</li>
+                                <li>Automated modeling and transformation using AWS stack (Glue, Lambda)</li>
+                                <li>Developed skills in storytelling using tools like Sage Maker and Power BI</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4 fade-in delay-2">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="h4 mb-0">Analyst</h3>
+                                <span class="badge bg-primary">Sept 2021 - Jan 2022</span>
+                            </div>
+                            <p class="text-muted mb-3">Chau Phan Financial Services</p>
+                            <ul>
+                                <li>Transformed customer data for analysis using Python and Power Query/Power BI</li>
+                                <li>Provided in-depth information analysis with visualization about health insurance and government benefits</li>
+                                <li>Assisted, invited, and enrolled over 800 Obama Healthcare Plans</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card fade-in delay-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3 class="h4 mb-0">IT Intern</h3>
+                                <span class="badge bg-primary">Aug 2020 - Dec 2020</span>
+                            </div>
+                            <p class="text-muted mb-3">Fulton County Government</p>
+                            <ul>
+                                <li>Assisted the CJIS IT department to generate and automate a learning model using RStudio</li>
+                                <li>Utilized multiple tools (Tableau Prep, RStudio, and GitHub lab) to set up workflow</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+                <div class="view-counter-section py-4 text-center">
+            <div class="container">
+                <div class="view-counter-card">
+                    <div class="view-counter-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="view-counter-stats">
+                        <div class="counter-item">
+                            <div class="counter-value" id="view-count">--</div>
+                            <div class="counter-label">Total Views</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="contact" class="py-5">
+            <div class="container px-4 px-lg-5">
+                <h2 class="section-title">Get In Touch</h2>
+                
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 fade-in">
+                        <div class="row mb-5">
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="card h-100 text-center py-4">
+                                    <div class="card-body">
+                                        <i class="fas fa-envelope text-primary mb-3" style="font-size: 2rem;"></i>
+                                        <h4 class="h5 mb-3">Email</h4>
+                                        <a href="mailto:ducminh97@aol.com" class="text-decoration-none">ducminh97@aol.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="card h-100 text-center py-4">
+                                    <div class="card-body">
+                                        <i class="fas fa-phone text-primary mb-3" style="font-size: 2rem;"></i>
+                                        <h4 class="h5 mb-3">Phone</h4>
+                                        <div class="phone-numbers">
+                                        <div class="phone-item mb-2">
+                                            <span class="flag-icon">VN</span>
+                                            <span>(034) 745-7180</span>
+                                        </div>
+                                        <div class="phone-item">
+                                            <span class="flag-icon">USA</span>
+                                            <span>(470) 531-7542</span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="card h-100 text-center py-4">
+                                    <div class="card-body">
+                                        <i class="fas fa-map-marker-alt text-primary mb-3" style="font-size: 2rem;"></i>
+                                        <h4 class="h5 mb-3">Location</h4>
+                                        <span>Atlanta, GA</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <h3 class="h4 text-center mb-4">Send Me a Message</h3>
+                                <div class="google-form-container" style="overflow: hidden;">
+                                    <iframe 
+                                        src="https://docs.google.com/forms/d/19hzxDwoMZ3SoTe5ZAQ2XUarXzaryPCilDICSfUi3KGA/viewform?embedded=true" 
+                                        width="100%" 
+                                        height="680" 
+                                        frameborder="0" 
+                                        marginheight="0" 
+                                        marginwidth="0"
+                                        style="margin-top: -50px;">
+                                        Loading...
+                                    </iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3">Minh Duc Nguyen</h5>
+                    <p class="mb-3">BI Analyst & Data Engineer</p>
+                    <p>&copy; 2025 Minh Duc Nguyen. All rights reserved.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="mb-3">Connect With Me</h5>
+                    <div class="d-flex mb-4">
+                        <a href="https://linkedin.com/in/mn97" target="_blank" class="social-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/aws-minh" target="_blank" class="social-icon">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:ducminh97@aol.com" class="social-icon">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Initialize counters in localStorage if they don't exist
+        if (!localStorage.getItem('total_views')) {
+            localStorage.setItem('total_views', '0');
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track page view on load
+            trackPageView();
+            
+            // Update view counter on page
+            updateViewCounter();
+            
+            // Track section views when scrolling
+            let lastSection = getCurrentSection();
+            window.addEventListener('scroll', function() {
+                const currentSection = getCurrentSection();
+                if (currentSection && currentSection !== lastSection) {
+                    trackSectionView(currentSection);
+                    lastSection = currentSection;
+                }
+            });
+            
+            // Add active class to navbar links based on current section
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            
+            function highlightNavLink() {
+                let scrollPosition = window.scrollY + 100;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === '#' + sectionId) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', highlightNavLink);
+            highlightNavLink(); // Call once on load
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Reveal animations on scroll
+            const animateElements = document.querySelectorAll('.fade-in');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Project filtering logic
+            const filterButtons = document.querySelectorAll('.project-filter-btns .btn');
+            const projectCards = document.querySelectorAll('#project-list .project-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Set active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filterValue = this.getAttribute('data-filter');
+
+                    projectCards.forEach(card => {
+                        const cardCategories = card.getAttribute('data-category').split(' ');
+                        if (filterValue === 'all' || cardCategories.includes(filterValue)) {
+                            card.classList.remove('hide');
+                            // Re-trigger animation if needed, or ensure it's visible
+                            card.style.display = ''; // Or 'block', 'flex' depending on your layout
+                        } else {
+                            card.classList.add('hide');
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+
+        // Function to get current visible section
+        function getCurrentSection() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPosition = window.scrollY + 100;
+            
+            for (const section of sections) {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    return section.getAttribute('id');
+                }
+            }
+            
+            return null;
+        }
+
+        // Track page view
+        function trackPageView() {
+            // Get today's date in YYYY-MM-DD format
+            const today = new Date().toISOString().split('T')[0];
+            const storageKey = `pageviews_${today}`;
+            
+            // Get current count from localStorage
+            let count = localStorage.getItem(storageKey) || 0;
+            count = parseInt(count) + 1;
+            
+            // Save updated count
+            localStorage.setItem(storageKey, count);
+            
+            // Update total count
+            let totalCount = localStorage.getItem('total_views') || 0;
+            totalCount = parseInt(totalCount) + 1;
+            localStorage.setItem('total_views', totalCount);
+            
+            // Send data to counter API
+            const visitorData = {
+                url: window.location.pathname,
+                referrer: document.referrer || 'direct',
+                screenWidth: window.innerWidth,
+                screenHeight: window.innerHeight,
+                date: today,
+                userAgent: navigator.userAgent,
+                language: navigator.language
+            };
+            
+            // Store visitor data in localStorage
+            const visitorHistory = JSON.parse(localStorage.getItem('visitor_history') || '[]');
+            visitorHistory.push({
+                timestamp: new Date().toISOString(),
+                data: visitorData
+            });
+            
+            // Keep only the latest 100 entries
+            if (visitorHistory.length > 100) {
+                visitorHistory.shift();
+            }
+            
+            localStorage.setItem('visitor_history', JSON.stringify(visitorHistory));
+            
+            // Update counter display
+            updateViewCounter();
+        }
+
+        // Track section view
+        function trackSectionView(section) {
+            // Get today's date in YYYY-MM-DD format
+            const today = new Date().toISOString().split('T')[0];
+            const storageKey = `section_${section}_${today}`;
+            
+            // Get current count from localStorage
+            let count = localStorage.getItem(storageKey) || 0;
+            count = parseInt(count) + 1;
+            
+            // Save updated count
+            localStorage.setItem(storageKey, count);
+            
+            // Store section view in history
+            const sectionHistory = JSON.parse(localStorage.getItem('section_history') || '[]');
+            sectionHistory.push({
+                timestamp: new Date().toISOString(),
+                section: section
+            });
+            
+            // Keep only the latest 100 entries
+            if (sectionHistory.length > 100) {
+                sectionHistory.shift();
+            }
+            
+            localStorage.setItem('section_history', JSON.stringify(sectionHistory));
+        }
+
+        // Update view counter display
+        function updateViewCounter() {
+            const viewCountElement = document.getElementById('view-count');
+            if (viewCountElement) {
+                const totalViews = localStorage.getItem('total_views') || 0;
+                viewCountElement.textContent = parseInt(totalViews).toLocaleString();
+            }
+        }
+    </script>
+    
+    <script data-goatcounter="https://minhducnguyen.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+    
+</html>
