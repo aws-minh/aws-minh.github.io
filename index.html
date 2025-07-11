@@ -184,6 +184,7 @@
         .project-filter-btns .btn.active {
             background-color: var(--primary);
             color: white;
+            border-color: var(--primary);
         }
         
         /* Footer */
@@ -316,14 +317,11 @@
             section {
                 padding: 60px 0;
             }
-        }
-        
-        /* Google Form container */
-        .google-form-container {
-            overflow: hidden;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            background-color: white;
+            
+            .project-filter-btns .btn {
+                margin: 0.25rem;
+                font-size: 0.875rem;
+            }
         }
         
         /* Animation */
@@ -352,26 +350,42 @@
         }
 
         /* View Counter Styles */
-        .view-counter {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 16px;
-            padding: 12px 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            margin-top: 30px;
-            display: inline-block;
+        .view-counter-section {
+            background-color: var(--light);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
         }
         
-        .view-counter-value {
+        .view-counter-card {
+            background-color: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .view-counter-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .counter-value {
+            font-size: 1.5rem;
             font-weight: 600;
             color: var(--primary);
+            margin-bottom: 0;
         }
         
-        .view-counter-container {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            margin-bottom: 40px;
+        .counter-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0;
         }
+        
         /* Styles for hiding/showing project cards */
         .project-card.hide {
             display: none;
@@ -470,6 +484,37 @@
         .alert-success {
             background-color: rgba(40, 167, 69, 0.1);
             color: #28a745;
+        }
+
+        /* Phone numbers styling */
+        .phone-numbers {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .phone-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .flag-icon {
+            display: inline-block;
+            width: 20px;
+            height: 15px;
+            background-size: cover;
+            border-radius: 2px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-align: center;
+            line-height: 15px;
+            color: white;
+        }
+
+        .flag-icon {
+            background-color: var(--primary);
         }
     </style>
 </head>
@@ -610,7 +655,7 @@
                 </div>
                 
                 <div class="row" id="project-list">
-                    <!-- Live Iran War Tracker (moved to top) -->
+                    <!-- Live Iran War Tracker -->
                     <div class="col-lg-6 mb-5 project-card fade-in delay-1" data-category="analytics-bi web-dev">
                         <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -649,7 +694,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Vietnamese Stock Market Dashboard (moved to top) -->
+
+                    <!-- Vietnamese Stock Market Dashboard -->
                     <div class="col-lg-6 mb-5 project-card fade-in delay-2" data-category="analytics-bi">
                         <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -688,6 +734,7 @@
                         </div>
                     </div>
 
+                    <!-- LLM SQL Visualization -->
                     <div class="col-lg-6 mb-5 project-card fade-in" data-category="ai-ds">
                         <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -721,6 +768,7 @@
                         </div>
                     </div>
                     
+                    <!-- Demo Nails & Spa Website -->
                     <div class="col-lg-6 mb-5 project-card fade-in delay-1" data-category="web-dev">
                          <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -754,6 +802,7 @@
                         </div>
                     </div>
                 
+                    <!-- Mortgage Rate Prediction -->
                     <div class="col-lg-6 mb-5 project-card fade-in" data-category="ai-ds">
                         <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -788,6 +837,7 @@
                         </div>
                     </div>
 
+                    <!-- Kafka Temperature Visualization -->
                     <div class="col-lg-6 mb-5 project-card fade-in delay-2" data-category="analytics-bi">
                          <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -821,6 +871,7 @@
                         </div>
                     </div>
                     
+                    <!-- eCommerce Platform -->
                     <div class="col-lg-6 mb-5 project-card fade-in delay-3" data-category="web-dev">
                         <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -861,6 +912,7 @@
                         </div>
                     </div>
                     
+                    <!-- COVID-19 Analytics Dashboard -->
                     <div class="col-lg-6 mb-5 project-card fade-in delay-2" data-category="analytics-bi">
                         <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -896,44 +948,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-lg-6 mb-5 project-card fade-in delay-2" data-category="analytics-bi">
-                        <div class="card h-100">
-                            <div class="card-body d-flex flex-column">
-                                <div class="project-header">
-                                    <h3 class="project-title h3">Vietnamese Stock Market Dashboard</h3>
-                                    <a href="https://minhducnguyen.org/vietstock" target="_blank" class="project-link btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-external-link-alt me-1"></i> Visit
-                                    </a>
-                                </div>
-                                <p class="project-description">
-                                    A full-stack real-time Vietnamese stock market dashboard featuring live market data visualization, 
-                                    bilingual support, and interactive TradingView-style charting for over 30 major Vietnamese stocks.
-                                </p>
-                                <div class="mb-3">
-                                    <strong>Key Features:</strong>
-                                    <ul class="feature-list">
-                                        <li>Developed a React/TypeScript frontend with interactive TradingView-style charting</li>
-                                        <li>Implemented bilingual support (English/Vietnamese) for international users</li>
-                                        <li>Built an advanced XGBoost machine learning pipeline for stock price predictions</li>
-                                        <li>Integrated technical indicators and market sentiment analysis for multi-horizon forecasting (30/60/90 days)</li>
-                                        <li>Created a high-performance ETL system for real-time market data synchronization</li>
-                                        <li>Engineered automated news aggregation from multiple Vietnamese financial sources</li>
-                                        <li>Implemented WebSocket-based live updates for market indices, stock prices, and trading volumes</li>
-                                    </ul>
-                                </div>
-                                <div class="project-tags mt-auto">
-                                    <span class="tag">React</span>
-                                    <span class="tag">PostgreSQL</span>
-                                    <span class="tag">XGBoost</span>
-                                    <span class="tag">TailwindCSS</span>
-                                    <span class="tag">Machine Learning</span>
-                                    <span class="tag">ETL</span>
-                                    <span class="tag">React Query</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
+                    <!-- HR Analytics Dashboard -->
                     <div class="col-lg-6 mb-5 project-card fade-in delay-2" data-category="analytics-bi">
                          <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -967,44 +982,45 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 mb-5 project-card fade-in delay-2" data-category="analytics-bi web-development full-stack">
-                         <div class="card h-100">
+
+                    <!-- Sales Dashboard -->
+                    <div class="col-lg-6 mb-5 project-card fade-in delay-2" data-category="analytics-bi web-dev">
+                        <div class="card h-100">
                             <div class="card-body d-flex flex-column">
                                 <div class="project-header">
-                                    <h3 class="project-title h3">Predictive Sales Dashboard</h3>
-                                    <a href="http://reasonably-fast-labrador.ngrok-free.app/" target="_blank" class="project-link btn btn-sm btn-outline-primary">
+                                    <h3 class="project-title h3">Sales Dashboard</h3>
+                                    <a href="https://safe-coral-lenient.ngrok-free.app/" target="_blank" class="project-link btn btn-sm btn-outline-primary">
                                         <i class="fas fa-external-link-alt me-1"></i> Visit
                                     </a>
                                 </div>
                                 <p class="project-description">
-                                    A full-stack web application delivering a comprehensive sales analytics dashboard with historical data visualization and ARIMA-based predictive forecasting for sales and profit.
+                                    A comprehensive sales analytics platform built with modern web technologies, featuring real-time data visualization, interactive dashboards, and robust backend infrastructure for retail business intelligence and performance monitoring.
                                 </p>
                                 <div class="mb-3">
                                     <strong>Key Features & Achievements:</strong>
                                     <ul class="feature-list">
-                                        <li>Developed a full-stack sales analytics platform, integrating a Python/FastAPI backend with a React/Vite frontend to provide actionable sales insights and predictive forecasts.</li>
-                                        <li>Designed and implemented interactive dashboards using React and Recharts, visualizing key performance indicators, sales trends, and ARIMA model-based predictions for overall monthly sales and monthly profit by category.</li>
-                                        <li>Engineered robust backend services using FastAPI and SQLAlchemy for efficient data processing from CSV source into an SQLite database, and serving data via RESTful APIs for dynamic frontend consumption.</li>
+                                        <li>Developed a full-stack shoe retail analytics platform using React frontend with Flask/Python backend, processing 1M+ sales transactions across multiple store chains and customer segments with comprehensive ETL pipeline transforming CSV data into optimized SQLite star schema.</li>
+                                        <li>Engineered interactive dashboards with Recharts and Chart.js visualizing key performance indicators including revenue trends, profit margins, customer segmentation analytics, and inventory management across 85+ stores with real-time data updates via RESTful APIs.</li>
+                                        <li>Deployed containerized application using Kubernetes with nginx reverse proxy, ngrok tunneling for external access, and automated CI/CD pipeline with persistent data storage, supporting production-ready analytics for enterprise-scale retail operations.</li>
                                     </ul>
                                 </div>
                                 <div class="project-tags mt-auto">
                                     <span class="tag">React</span>
-                                    <span class="tag">FastAPI</span>
+                                    <span class="tag">Flask</span>
                                     <span class="tag">Python</span>
-                                    <span class="tag">SQLAlchemy</span>
-                                    <span class="tag">Pandas</span>
-                                    <span class="tag">ARIMA</span>
-                                    <span class="tag">Recharts</span>
-                                    <span class="tag">Docker</span>
+                                    <span class="tag">SQLite</span>
                                     <span class="tag">Kubernetes</span>
-                                    <span class="tag">Data Visualization</span>
-                                    <span class="tag">Predictive Analytics</span>
-                                    <span class="tag">Full-Stack</span>
+                                    <span class="tag">Docker</span>
+                                    <span class="tag">Nginx</span>
+                                    <span class="tag">Recharts</span>
+                                    <span class="tag">Pandas</span>
+                                    <span class="tag">ETL</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
+                    <!-- US - Global Tariff Analytics -->
                     <div class="col-lg-6 mb-5 project-card fade-in" data-category="analytics-bi web-dev">
                         <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -1038,7 +1054,8 @@
                             </div>
                         </div>
                     </div>
-                </div> </div>
+                </div>
+            </div>
         </section>
 
         <section id="experience" class="py-5 bg-white">
@@ -1108,7 +1125,8 @@
             </div>
         </section>
 
-                <div class="view-counter-section py-4 text-center">
+        <!-- View Counter Section -->
+        <div class="view-counter-section py-4 text-center">
             <div class="container">
                 <div class="view-counter-card">
                     <div class="view-counter-icon">
@@ -1146,15 +1164,15 @@
                                         <i class="fas fa-phone text-primary mb-3" style="font-size: 2rem;"></i>
                                         <h4 class="h5 mb-3">Phone</h4>
                                         <div class="phone-numbers">
-                                        <div class="phone-item mb-2">
-                                            <span class="flag-icon">VN</span>
-                                            <span>(034) 745-7180</span>
+                                            <div class="phone-item mb-2">
+                                                <span class="flag-icon">VN</span>
+                                                <span>(034) 745-7180</span>
+                                            </div>
+                                            <div class="phone-item">
+                                                <span class="flag-icon">USA</span>
+                                                <span>(470) 531-7542</span>
+                                            </div>
                                         </div>
-                                        <div class="phone-item">
-                                            <span class="flag-icon">USA</span>
-                                            <span>(470) 531-7542</span>
-                                        </div>
-                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -1279,431 +1297,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Initialize counters in localStorage if they don't exist
-        if (!localStorage.getItem('total_views')) {
-            localStorage.setItem('total_views', '0');
-        }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            // Track page view on load
-            trackPageView();
-            
-            // Update view counter on page
-            updateViewCounter();
-            
-            // Track section views when scrolling
-            let lastSection = getCurrentSection();
-            window.addEventListener('scroll', function() {
-                const currentSection = getCurrentSection();
-                if (currentSection && currentSection !== lastSection) {
-                    trackSectionView(currentSection);
-                    lastSection = currentSection;
-                }
-            });
-            
-            // Add active class to navbar links based on current section
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-            
-            function highlightNavLink() {
-                let scrollPosition = window.scrollY + 100;
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.offsetHeight;
-                    const sectionId = section.getAttribute('id');
-                    
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === '#' + sectionId) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }
-            
-            window.addEventListener('scroll', highlightNavLink);
-            highlightNavLink(); // Call once on load
-            
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        window.scrollTo({
-                            top: target.offsetTop - 70,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // Reveal animations on scroll
-            const animateElements = document.querySelectorAll('.fade-in');
-            
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-            
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = 1;
-                        entry.target.style.transform = 'translateY(0)';
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-            
-            animateElements.forEach(element => {
-                observer.observe(element);
-            });
-
-            // Project filtering logic
-            const filterButtons = document.querySelectorAll('.project-filter-btns .btn');
-            const projectCards = document.querySelectorAll('#project-list .project-card');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Set active button
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-
-                    const filterValue = this.getAttribute('data-filter');
-
-                    projectCards.forEach(card => {
-                        const cardCategories = card.getAttribute('data-category').split(' ');
-                        if (filterValue === 'all' || cardCategories.includes(filterValue)) {
-                            card.classList.remove('hide');
-                            // Re-trigger animation if needed, or ensure it's visible
-                            card.style.display = ''; // Or 'block', 'flex' depending on your layout
-                        } else {
-                            card.classList.add('hide');
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-
-            // Message System Initialization
-            initializeMessageSystem();
-            loadComments();
-        });
-
-        // Function to get current visible section
-        function getCurrentSection() {
-            const sections = document.querySelectorAll('section[id]');
-            const scrollPosition = window.scrollY + 100;
-            
-            for (const section of sections) {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-                
-                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                    return section.getAttribute('id');
-                }
-            }
-            
-            return null;
-        }
-
-        // Track page view
-        function trackPageView() {
-            // Get today's date in YYYY-MM-DD format
-            const today = new Date().toISOString().split('T')[0];
-            const storageKey = `pageviews_${today}`;
-            
-            // Get current count from localStorage
-            let count = localStorage.getItem(storageKey) || 0;
-            count = parseInt(count) + 1;
-            
-            // Save updated count
-            localStorage.setItem(storageKey, count);
-            
-            // Update total count
-            let totalCount = localStorage.getItem('total_views') || 0;
-            totalCount = parseInt(totalCount) + 1;
-            localStorage.setItem('total_views', totalCount);
-            
-            // Send data to counter API
-            const visitorData = {
-                url: window.location.pathname,
-                referrer: document.referrer || 'direct',
-                screenWidth: window.innerWidth,
-                screenHeight: window.innerHeight,
-                date: today,
-                userAgent: navigator.userAgent,
-                language: navigator.language
-            };
-            
-            // Store visitor data in localStorage
-            const visitorHistory = JSON.parse(localStorage.getItem('visitor_history') || '[]');
-            visitorHistory.push({
-                timestamp: new Date().toISOString(),
-                data: visitorData
-            });
-            
-            // Keep only the latest 100 entries
-            if (visitorHistory.length > 100) {
-                visitorHistory.shift();
-            }
-            
-            localStorage.setItem('visitor_history', JSON.stringify(visitorHistory));
-            
-            // Update counter display
-            updateViewCounter();
-        }
-
-        // Track section view
-        function trackSectionView(section) {
-            // Get today's date in YYYY-MM-DD format
-            const today = new Date().toISOString().split('T')[0];
-            const storageKey = `section_${section}_${today}`;
-            
-            // Get current count from localStorage
-            let count = localStorage.getItem(storageKey) || 0;
-            count = parseInt(count) + 1;
-            
-            // Save updated count
-            localStorage.setItem(storageKey, count);
-            
-            // Store section view in history
-            const sectionHistory = JSON.parse(localStorage.getItem('section_history') || '[]');
-            sectionHistory.push({
-                timestamp: new Date().toISOString(),
-                section: section
-            });
-            
-            // Keep only the latest 100 entries
-            if (sectionHistory.length > 100) {
-                sectionHistory.shift();
-            }
-            
-            localStorage.setItem('section_history', JSON.stringify(sectionHistory));
-        }
-
-        // Update view counter display
-        function updateViewCounter() {
-            const viewCountElement = document.getElementById('view-count');
-            if (viewCountElement) {
-                const totalViews = localStorage.getItem('total_views') || 0;
-                viewCountElement.textContent = parseInt(totalViews).toLocaleString();
-            }
-        }
-
-        // Message System Functions
-        function initializeMessageSystem() {
-            // Contact form handler
-            const contactForm = document.getElementById('contact-form');
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    handleContactFormSubmit();
-                });
-            }
-
-            // Comment form handler
-            const commentForm = document.getElementById('comment-form');
-            if (commentForm) {
-                commentForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    handleCommentSubmit();
-                });
-            }
-        }
-
-        function handleContactFormSubmit() {
-            const name = document.getElementById('contact-name').value;
-            const email = document.getElementById('contact-email').value;
-            const subject = document.getElementById('contact-subject').value;
-            const message = document.getElementById('contact-message').value;
-
-            if (!name || !email || !subject || !message) {
-                alert('Please fill in all required fields.');
-                return;
-            }
-
-            // Create message object
-            const contactMessage = {
-                id: Date.now().toString(),
-                type: 'contact',
-                name: name,
-                email: email,
-                subject: subject,
-                message: message,
-                timestamp: new Date().toISOString(),
-                read: false
-            };
-
-            // Save to localStorage (messages for admin)
-            saveMessageToInbox(contactMessage);
-
-            // Show success message
-            document.getElementById('contact-success').style.display = 'block';
-            document.getElementById('contact-form').reset();
-
-            // Hide success message after 5 seconds
-            setTimeout(() => {
-                document.getElementById('contact-success').style.display = 'none';
-            }, 5000);
-        }
-
-        function handleCommentSubmit() {
-            const name = document.getElementById('comment-name').value;
-            const email = document.getElementById('comment-email').value;
-            const text = document.getElementById('comment-text').value;
-
-            if (!name || !text) {
-                alert('Please fill in name and comment.');
-                return;
-            }
-
-            // Create comment object
-            const comment = {
-                id: Date.now().toString(),
-                name: name,
-                email: email,
-                text: text,
-                timestamp: new Date().toISOString(),
-                approved: true // Auto-approve for now
-            };
-
-            // Save comment to localStorage
-            saveComment(comment);
-
-            // Clear form
-            document.getElementById('comment-form').reset();
-
-            // Reload comments
-            loadComments();
-        }
-
-        function saveMessageToInbox(message) {
-            let messages = JSON.parse(localStorage.getItem('inbox_messages') || '[]');
-            messages.unshift(message); // Add to beginning
-            
-            // Keep only latest 100 messages
-            if (messages.length > 100) {
-                messages = messages.slice(0, 100);
-            }
-            
-            localStorage.setItem('inbox_messages', JSON.stringify(messages));
-        }
-
-        function saveComment(comment) {
-            let comments = JSON.parse(localStorage.getItem('website_comments') || '[]');
-            comments.unshift(comment); // Add to beginning
-            
-            // Keep only latest 50 comments
-            if (comments.length > 50) {
-                comments = comments.slice(0, 50);
-            }
-            
-            localStorage.setItem('website_comments', JSON.stringify(comments));
-        }
-
-        function loadComments() {
-            const comments = JSON.parse(localStorage.getItem('website_comments') || '[]');
-            const commentsContainer = document.getElementById('comments-list');
-            const noCommentsMsg = document.getElementById('no-comments');
-            const commentCount = document.getElementById('comment-count');
-
-            // Update comment count
-            commentCount.textContent = comments.length;
-
-            if (comments.length === 0) {
-                commentsContainer.innerHTML = '';
-                noCommentsMsg.style.display = 'block';
-                return;
-            }
-
-            noCommentsMsg.style.display = 'none';
-            
-            // Display comments
-            commentsContainer.innerHTML = comments.map(comment => {
-                const date = new Date(comment.timestamp);
-                const timeAgo = getTimeAgo(date);
-                const isAdmin = comment.email === 'ducminh97@aol.com' || comment.name.toLowerCase().includes('admin');
-                
-                return `
-                    <div class="comment-item ${isAdmin ? 'comment-admin' : ''} ${comment.isNew ? 'new' : ''}">
-                        <div class="comment-header">
-                            <span class="comment-author">${escapeHtml(comment.name)}</span>
-                            <span class="comment-date">${timeAgo}</span>
-                        </div>
-                        <div class="comment-text">${escapeHtml(comment.text)}</div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function getTimeAgo(date) {
-            const now = new Date();
-            const diffInSeconds = Math.floor((now - date) / 1000);
-
-            if (diffInSeconds < 60) return 'Just now';
-            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
-            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
-            if (diffInSeconds < 2592000) return `${Math.floor(diffInSeconds / 86400)} days ago`;
-            
-            return date.toLocaleDateString();
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // Add some sample comments for demonstration
-        function addSampleComments() {
-            const sampleComments = [
-                {
-                    id: '1',
-                    name: 'Sarah Johnson',
-                    email: 'sarah@example.com',
-                    text: 'Great portfolio! Really impressed with your Live Iran War Tracker project. The real-time monitoring capabilities are fantastic.',
-                    timestamp: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
-                    approved: true
-                },
-                {
-                    id: '2',
-                    name: 'Mike Chen',
-                    email: 'mike@example.com',
-                    text: 'Your Vietnamese Stock Market Dashboard looks amazing! The bilingual support and TradingView-style charting are really well implemented.',
-                    timestamp: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
-                    approved: true
-                },
-                {
-                    id: '3',
-                    name: 'Admin',
-                    email: 'ducminh97@aol.com',
-                    text: 'Thank you all for the positive feedback! Feel free to reach out if you have any questions about my projects.',
-                    timestamp: new Date(Date.now() - 259200000).toISOString(), // 3 days ago
-                    approved: true
-                }
-            ];
-
-            // Only add sample comments if no comments exist
-            const existingComments = JSON.parse(localStorage.getItem('website_comments') || '[]');
-            if (existingComments.length === 0) {
-                localStorage.setItem('website_comments', JSON.stringify(sampleComments));
-            }
-        }
-
-        // Initialize sample comments on first load
-        document.addEventListener('DOMContentLoaded', function() {
-            addSampleComments();
-        });
-    </script>
-    
-    <script data-goatcounter="https://minhducnguyen.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-</body>
-    
-</html>
+        // Initialize view tracking
+        if (!window.localStorage) {
+            console.warn('LocalStorage not available');
+        } else {
+            // Initialize counters if they don't exist
+            if
